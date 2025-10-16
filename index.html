@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Sticker Studio</title>
+  
+  <!-- External Scripts -->
+  <!-- Tailwind CSS for utility-first styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- gif.js for client-side GIF generation -->
+  <script src="https://cdn.jsdelivr.net/npm/gif.js.optimized@1.0.1/dist/gif.js"></script>
+  <!-- heic2any for converting HEIC/HEIF images to web-friendly formats -->
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+  
+  <!-- Google Fonts for custom typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Global CSS Styles -->
+  <style>
+    /* Smooth scrolling behavior for anchor links */
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Ensure the app takes up the full viewport height and hide overflow to prevent unwanted scrollbars */
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+    /* Base body styles, including font, background color, and an animated gradient effect */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #030712;
+      background-image: radial-gradient(at 15% 15%, hsla(260, 80%, 55%, 0.1) 0px, transparent 50%),
+                        radial-gradient(at 85% 85%, hsla(230, 80%, 60%, 0.1) 0px, transparent 50%);
+      animation: move-background 20s ease-in-out infinite;
+      background-size: 200% 200%;
+      background-attachment: fixed;
+    }
+    /* Keyframes for the animated background gradient */
+    @keyframes move-background {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Custom font class for headings */
+    .font-heading {
+      font-family: 'Exo 2', sans-serif;
+    }
+    /* Custom scrollbar styling for a consistent dark theme look */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1f2937;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #4b5563;
+        border-radius: 5px;
+        border: 2px solid #1f2937;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+    }
+    /* A simple fade-in animation for modals and other new elements */
+    .fade-in {
+      animation: fadeInAnimation 0.5s ease-in-out forwards;
+    }
+    @keyframes fadeInAnimation {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Keyframes for various UI animations used in the AiCore component */
+    @keyframes orbit {
+        0% { transform: rotate(0deg) translateX(10px) rotate(0deg); }
+        100% { transform: rotate(360deg) translateX(10px) rotate(-360deg); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes text-focus-in {
+      0% {
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+      }
+      100% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+      }
+    }
+    @keyframes core-scale-in {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .core-scale-in-animation {
+        animation: core-scale-in 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+    @keyframes core-power-up {
+      0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.25) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    .core-power-up-animation {
+      animation: core-power-up 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+    }
+    /* Responsive Layout Classes: These define the grid structure for different layout modes */
+    .layout-stacked {
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .layout-side-by-side {
+      grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr);
+    }
+    .layout-dual-pane {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr);
+    }
+    /* The 'auto' layout is responsive: stacked on mobile, side-by-side on larger screens */
+    .layout-auto {
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
+    }
+    @media (min-width: 768px) and (orientation: landscape), (min-width: 1024px) {
+      .layout-auto {
+        grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr);
+      }
+    }
+  </style>
+  
+  <!-- Import Map: This allows using bare module specifiers (e.g., "react") in the code,
+       which are then resolved to the full CDN URLs by the browser. This is a modern alternative
+       to bundlers like Webpack for simple projects. -->
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.17.0",
+    "jszip": "https://aistudiocdn.com/jszip@^3.10.1",
+    "gif.js": "https://aistudiocdn.com/gif.js@^0.2.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <!-- The root element where the entire React application will be mounted. -->
+  <div id="root"></div>
+  <!-- The entry point script for the React application. -->
+  <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

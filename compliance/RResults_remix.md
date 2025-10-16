@@ -1,0 +1,1 @@
+"C:\SnoopLabs\Labs\Al Sticker Studio\AI STICKER STUDIO - CORE MODEL - Google AI Studio version\compliance\Screenshot 2025-10-16 062959.png"

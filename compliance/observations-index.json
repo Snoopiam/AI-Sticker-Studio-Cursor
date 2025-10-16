@@ -1,0 +1,14 @@
+{
+  "latestDate": "2025-10-11",
+  "latestFile": "compliance/observations-2025-10-11.md",
+  "statusCounts": {
+    "open": 0,
+    "approved": 0,
+    "inProgress": 0,
+    "completed": 4
+  },
+  "lastRevisionTimestamp": "2025-10-11T15:30:00Z",
+  "lastActor": "GitHub Copilot",
+  "lastActorModel": "Claude 3.5 Sonnet",
+  "lastActorSessionId": "2025-10-11-runtime-fix"
+}
