@@ -2807,6 +2807,547 @@ This is why Identity Lock V2 achieves ~95% consistency compared to ~60% with sim
 
 ---
 
+## 6. ACTUAL GENERATION PROMPTS WITH EXAMPLES
+
+Now that you understand the calibration system, let's see the **actual prompts** used during sticker generation with real settings filled in!
+
+### 6.1 Static Sticker Generation (Image-to-Image Mode)
+
+**Purpose**: Generates a static sticker with Identity Lock  
+**Model**: `gemini-2.5-flash-image-preview`  
+**Inputs**: Identity anchor image + Expression + Style settings
+
+#### **Real Example: Laughing Sticker in Cartoon Vector Style**
+
+**Settings Used**:
+- Expression: Laughing
+- Style: Cartoon Vector
+- Palette: Vibrant
+- Line Style: Smooth
+- Shading: Cel-shading
+- Composition: Half-Body
+- Identity Lock Strength: Standard (V2 enabled)
+
+**Actual Prompt Sent to AI**:
+
+```
+You are a world-class digital illustrator specializing in clean, vibrant vector art for stickers. 
+Your primary duty is to maintain perfect consistency with the provided Identity Lock profile.
+
+**Primary Directive:** The generated sticker MUST be a perfect likeness of the person in the 
+provided photograph. All facial features, hair, and defining characteristics MUST be preserved exactly.
+
+**Identity Anchor:**
+- **The character is the person** in the provided photograph.
+- **Detailed Analysis:** {"bone_structure":{"face_shape":"oval","jawline":"soft, slightly rounded 
+  angle","cheekbones":"moderate height with gentle prominence","chin":"rounded with slight projection",
+  "forehead":"average height, slightly wider than jawline"},"eye_biometrics":{"iris_color":"warm 
+  dark brown with subtle amber undertones","eye_shape":"almond","pupillary_distance":"average",
+  "eyelid_type":"double","eyebrow_shape":"gently arched, medium thickness"},"nose_structure":
+  {"bridge_width":"medium","bridge_height":"medium","nostril_shape":"oval, neutral","tip_shape":
+  "rounded","overall_size":"medium"},"mouth_features":{"lip_fullness":{"upper":"medium","lower":
+  "medium"},"cupids_bow":"moderate","mouth_width":"medium"},"distinctive_features":{"dimples":
+  "present when smiling, both cheeks","hair_style":"shoulder-length wavy dark brown hair with 
+  side part","earrings":"small silver studs in both ears","tattoos":"none","piercings":"ears only",
+  "markers":"small beauty mark above left lip"},"skin_tone":{"base":"medium with warm undertones",
+  "undertones":"warm"}}
+
+**Sticker Task:**
+1. **Expression/Pose:** Create a sticker of the character with the following expression: 
+   "The character is laughing hysterically, head thrown back slightly, eyes squeezed shut with 
+   joy, mouth wide open in genuine laughter. Both hands might be clutching their stomach or 
+   one hand near their face. Cartoon tears of joy at the corners of their eyes (small droplets). 
+   Pure, contagious joy radiates from this pose."
+
+2. **Artistic Style:**
+   - **Overall Style:** Cartoon Vector
+   - **Color Palette:** Vibrant
+   - **Line Style:** Smooth
+   - **Shading Style:** Cel-shading
+
+3. **Composition:** Half-Body
+
+4. **Output Format:** The final image MUST have a transparent background (alpha channel). 
+   It should be a professional, high-quality sticker.
+
+5. **Negative Prompts:** Avoid the following: blurry, low-quality, text, watermarks
+```
+
+**What the AI Receives**:
+- **Image 1**: Your original uploaded photo (base64)
+- **Image 2** (if V2 enabled): The neutral reference face
+- **Text Prompt**: The complete prompt above
+
+**Temperature**: 0.7 (balanced creativity)
+
+---
+
+#### **Real Example 2: Thumbs Up with Speech Bubble**
+
+**Settings Used**:
+- Expression: Thumbs Up
+- Speech Bubble: "Great job!"
+- Style: Sticker Style
+- Palette: Vibrant
+- Line Style: Bold
+- Shading: Gradient
+- Composition: Half-Body
+
+**Actual Prompt Sent**:
+
+```
+You are a world-class digital illustrator specializing in clean, vibrant vector art for stickers. 
+Your primary duty is to maintain perfect consistency with the provided Identity Lock profile.
+
+**Primary Directive:** The generated sticker MUST be a perfect likeness of the person in the 
+provided photograph. All facial features, hair, and defining characteristics MUST be preserved exactly.
+
+**Identity Anchor:**
+- **The character is the person** in the provided photograph.
+- **Detailed Analysis:** [Same identity template as above]
+
+**Sticker Task:**
+1. **Expression/Pose:** Create a sticker of the character with the following expression: 
+   "The character is giving an enthusiastic thumbs up with their right hand raised prominently 
+   in frame. Big, confident smile. Their body is slightly turned, arm extended forward proudly. 
+   This is an unmistakable sign of approval, agreement, or encouragement. The character should 
+   have a speech bubble saying "Great job!"."
+
+2. **Artistic Style:**
+   - **Overall Style:** Sticker Style
+   - **Color Palette:** Vibrant
+   - **Line Style:** Bold
+   - **Shading Style:** Gradient
+
+3. **Composition:** Half-Body
+
+4. **Output Format:** The final image MUST have a transparent background (alpha channel). 
+   It should be a professional, high-quality sticker.
+
+5. **Negative Prompts:** Avoid the following: blurry, low-quality, text, watermarks
+```
+
+**Note**: The speech bubble text is injected directly into the expression description!
+
+---
+
+### 6.2 Identity Lock V2 Generation (Advanced Mode)
+
+**Purpose**: Generates sticker with validation and auto-retry  
+**Model**: `gemini-2.5-flash-image-preview`  
+**Inputs**: Neutral face + Source image + Identity fingerprint
+
+When Identity Lock Strength is set to "Standard" or "Maximum", a more advanced prompt is used:
+
+#### **Real Example: HEY Expression with V2 System**
+
+**Actual Prompt Sent**:
+
+```
+🔒 IDENTITY-LOCKED GENERATION
+
+=== PRIORITY ORDER ===
+1. FACIAL IDENTITY (must match exactly)
+2. Target expression
+3. Visual style
+
+=== IDENTITY ANCHOR ===
+This person has an oval face shape with a soft, slightly rounded jawline and moderate cheekbone 
+prominence. Their warm dark brown eyes are almond-shaped with double eyelids, set at average 
+distance apart, beneath gently arched eyebrows of medium thickness. The nose is medium-sized 
+with a medium-height bridge and rounded tip. Lips are medium fullness with a moderate cupid's bow. 
+Distinctive features include dimples when smiling on both cheeks, shoulder-length wavy dark brown 
+hair with a side part, small silver stud earrings in both ears, and a small beauty mark above the 
+left lip. Skin tone is medium with warm undertones.
+
+=== TASK ===
+Expression: The character is waving enthusiastically with one hand raised high, fingers spread 
+in a friendly greeting. Big, genuine smile. The other hand might be on their hip or at their 
+side. Body language is open and welcoming. This is the universal "HEY!" greeting - warm, 
+inviting, and full of positive energy.
+
+Style: Cartoon Vector, Vibrant colors, Smooth lines, Cel-shading, Half-Body composition
+
+=== MANDATORY CONSTRAINTS ===
+Generated image MUST maintain:
+- Exact bone structure
+- Precise eye characteristics
+- Identical nose structure
+- Same lip shape
+- Skin tone consistency
+- CRITICAL: Dimples when appropriate
+- CRITICAL: Exact hair style
+- CRITICAL: Earrings visible
+- CRITICAL: Beauty mark above left lip
+
+=== STYLE RULES ===
+- Apply style to CLOTHING/BACKGROUND/EFFECTS only
+- Facial features stay photorealistic-accurate
+- If style conflicts with identity, IDENTITY WINS
+
+OUTPUT: Transparent background, professional quality
+```
+
+**What Happens Next**:
+
+1. **Generation**: AI creates the sticker
+2. **Validation**: System compares to neutral reference
+3. **Scoring**: Calculates similarity (0-100)
+4. **Decision**:
+   - Score ≥ 85: ✅ Accept
+   - Score < 85 + attempts left: 🔄 Retry with stronger constraints
+   - Score < 85 + no attempts: ⚠️ Accept with warning
+
+**Temperature**: 0.3 (more deterministic for identity preservation)
+
+---
+
+### 6.3 Animated Sticker Generation
+
+**Purpose**: Creates looping video sticker  
+**Model**: `veo-2.0-generate-001`  
+**Inputs**: Identity anchor image + Animation settings
+
+#### **Real Example: Celebrating with Bouncing Animation**
+
+**Settings Used**:
+- Expression: Celebrating
+- Animation Style: Bouncing
+- Speed: 1x
+- Loop: Infinite
+- Easing: Ease-out
+- Style: Kawaii
+- Palette: Pastel
+
+**Actual Prompt Sent**:
+
+```
+You are a master motion graphics artist and animator specializing in short-form looping 
+animations for digital stickers and GIFs. Your work has been featured in top messaging apps 
+and you're known for creating mesmerizing, seamless loops that capture personality and 
+emotion in 2-3 seconds.
+
+Your expertise includes:
+- Character animation and micro-expressions
+- Seamless loop composition and timing
+- Visual effects that enhance without overwhelming
+
+Create a premium animated sticker with these specifications:
+
+- **Subject Identity:** The character is the person in the provided image. Their identity, 
+  facial features, and hair MUST be preserved perfectly.
+  
+- **Identity Analysis:** {"bone_structure":{"face_shape":"oval",...},"eye_biometrics":{...}}
+  [Full identity template inserted here]
+
+- **Expression/Pose:** The character is celebrating triumphantly! Both arms are raised high 
+  above their head in a victory pose, possibly making fists or a "V" sign. Huge, ecstatic smile. 
+  Head might be tilted back slightly. Confetti or sparkles might be falling around them. This 
+  is pure, unbridled joy and achievement.
+
+- **Artistic Style:** Kawaii, Pastel colors, Smooth lines, Gradient shading.
+
+- **Animation:** A subtle, looping animation in the style of 'Bouncing'. The animation must 
+  be a perfect, seamless loop.
+
+- **Composition:** Full-Body.
+
+- **Advanced Animation Settings:** Speed: 1x, Loop: infinite, Easing: ease-out.
+
+- **Output:** The final output should have a transparent background if possible.
+```
+
+**Process**:
+1. Job submitted to Veo API
+2. Polling every 10 seconds for completion
+3. Progress: 0% → 45% → 95% (rendering) → 100%
+4. Video downloaded and converted to data URL
+5. Takes ~2-3 minutes total
+
+**Model Difference**: Video models work differently - they interpret motion, timing, and seamless looping automatically!
+
+---
+
+### 6.4 Text-to-Image Mode (No Identity Lock)
+
+**Purpose**: Creates fictional characters without photo  
+**Model**: `gemini-2.5-flash-image-preview`  
+**Inputs**: Text descriptions only
+
+#### **Real Example: Creating a Wizard Cat**
+
+**Settings Used**:
+- Input Mode: From Text
+- Subject: "A wise wizard cat"
+- Key Characteristics: "Wearing star-patterned robes, has green eyes, long white beard"
+- Expression: Thinking
+- Style: Cartoon Vector
+
+**Actual Prompt Sent**:
+
+```
+You are a world-class digital illustrator specializing in clean, vibrant vector art for stickers. 
+Your primary duty is to maintain perfect consistency with the provided Identity Lock profile.
+
+**Primary Directive:** The generated sticker MUST be a perfect likeness of the person in the 
+provided photograph. All facial features, hair, and defining characteristics MUST be preserved exactly.
+
+**Identity Anchor:**
+- **The character is the person** in the provided photograph.
+- **Detailed Analysis:** {"subject":"A wise wizard cat","keyCharacteristics":"Wearing star-patterned 
+  robes, has green eyes, long white beard"}
+
+**Sticker Task:**
+1. **Expression/Pose:** Create a sticker of the character with the following expression: 
+   "The character is in a thoughtful pose, with one paw/hand on their chin (or equivalent 
+   for their form), looking slightly upward as if pondering. A small lightbulb might appear 
+   above their head. The expression conveys deep thought, contemplation, or problem-solving."
+
+2. **Artistic Style:**
+   - **Overall Style:** Cartoon Vector
+   - **Color Palette:** Vibrant
+   - **Line Style:** Smooth
+   - **Shading Style:** Cel-shading
+
+3. **Composition:** Half-Body
+
+4. **Output Format:** The final image MUST have a transparent background (alpha channel). 
+   It should be a professional, high-quality sticker.
+
+5. **Negative Prompts:** Avoid the following: blurry, low-quality, text, watermarks
+```
+
+**Key Difference**: No actual photo provided - AI invents the character based on text description. Identity Lock is bypassed entirely!
+
+---
+
+### 6.5 Pose from Image (Special Case)
+
+**Purpose**: Uses exact pose from uploaded photo  
+**Credit Cost**: Only 1 credit (cheapest option!)
+
+#### **Real Example: Custom Pose**
+
+**Your Photo**: Shows you doing a peace sign with head tilted
+
+**Pose Analysis** (automatic):
+```
+"A person smiling and making a peace sign with their right hand near their face, head tilted 
+slightly to the left."
+```
+
+**Actual Prompt Sent**:
+
+```
+You are a world-class digital illustrator specializing in clean, vibrant vector art for stickers. 
+Your primary duty is to maintain perfect consistency with the provided Identity Lock profile.
+
+**Primary Directive:** The generated sticker MUST be a perfect likeness of the person in the 
+provided photograph. All facial features, hair, and defining characteristics MUST be preserved exactly.
+
+**Identity Anchor:**
+- **The character is the person** in the provided photograph.
+- **Detailed Analysis:** [Your identity template]
+
+**Sticker Task:**
+1. **Expression/Pose:** Create a sticker of the character with the following expression: 
+   "Use the exact pose and expression from the provided photo. Original photo description: 
+   A person smiling and making a peace sign with their right hand near their face, head tilted 
+   slightly to the left."
+
+2. **Artistic Style:**
+   - **Overall Style:** Cartoon Vector
+   - **Color Palette:** Vibrant
+   - **Line Style:** Smooth
+   - **Shading Style:** Cel-shading
+
+3. **Composition:** Half-Body
+
+4. **Output Format:** The final image MUST have a transparent background (alpha channel). 
+   It should be a professional, high-quality sticker.
+
+5. **Negative Prompts:** Avoid the following: blurry, low-quality, text, watermarks
+```
+
+**Why It's Cheaper**: AI doesn't need to "invent" a new pose - it just stylizes your existing one!
+
+---
+
+### 6.6 Group Photo Processing
+
+**Purpose**: Handles multiple people in one photo  
+**Special Handling**: Identity template becomes an array
+
+#### **Detection**:
+
+When you upload a group photo, the system analyzes:
+```json
+[
+  {
+    "person": "Person on left",
+    "bone_structure": {...},
+    "eye_biometrics": {...}
+  },
+  {
+    "person": "Person on right",
+    "bone_structure": {...},
+    "eye_biometrics": {...}
+  }
+]
+```
+
+**Prompt Modification**:
+
+The prompt changes from:
+- "The character is the person" (singular)
+
+To:
+- "The characters are the people" (plural)
+
+**Full Prompt Example**:
+
+```
+**Identity Anchor:**
+- **The characters are the people** in the provided photograph.
+- **Detailed Analysis:** [Array with 2+ identity templates]
+
+**Sticker Task:**
+1. **Expression/Pose:** Create a sticker of the characters with the following expression: 
+   "The characters are both laughing hysterically..."
+```
+
+**Result**: All people in the photo maintain their identities in the sticker!
+
+---
+
+### 6.7 Style Variations: How Settings Change Prompts
+
+#### **Photorealistic Style**:
+```
+**Artistic Style:**
+- **Overall Style:** Photorealistic
+- **Color Palette:** Vibrant
+- **Line Style:** None  ← No outlines for photos!
+- **Shading Style:** Gradient  ← Realistic depth
+```
+
+#### **Kawaii Style**:
+```
+**Artistic Style:**
+- **Overall Style:** Kawaii
+- **Color Palette:** Pastel  ← Soft, cute colors
+- **Line Style:** Smooth
+- **Shading Style:** Cel-shading  ← Anime-style shading
+```
+
+#### **WPAP Style**:
+```
+**Artistic Style:**
+- **Overall Style:** WPAP
+- **Color Palette:** Vibrant
+- **Line Style:** Bold  ← Thick geometric lines
+- **Shading Style:** Flat  ← No gradients, solid colors
+```
+
+---
+
+### 6.8 Negative Prompts (Hidden)
+
+Every generation includes these automatic negative prompts:
+
+**Default Negative Prompt**:
+```
+blurry, low-quality, text, watermarks, distorted, deformed, disfigured, bad anatomy, 
+wrong proportions, extra limbs, mutated hands, fused fingers, too many fingers, 
+long neck, cross-eyed, mutation, poorly drawn, ugly, tiling, out of frame, 
+body out of frame, cut off, draft, duplicate, morbid, mutilated, extra fingers, 
+missing arms, missing legs, extra arms, extra legs, malformed limbs, floating limbs
+```
+
+**Why Hidden**: These are baked into the generation system to prevent common AI artifacts. Users can't edit them (for quality control).
+
+---
+
+### 6.9 Validation Prompt (Identity Lock V2)
+
+**Purpose**: Scores generated sticker for identity match  
+**Model**: `gemini-2.5-flash`  
+**Output**: JSON with score
+
+**Actual Validation Prompt**:
+
+```
+Forensic facial comparison. Compare these images (should be SAME person):
+
+IMAGE 1: Neutral reference (ground truth)
+IMAGE 2: Generated stylized image
+
+IDENTITY TO VERIFY:
+This person has an oval face shape with a soft, slightly rounded jawline and moderate 
+cheekbone prominence. Their warm dark brown eyes are almond-shaped with double eyelids...
+[Full fingerprint]
+
+Analyze: face shape, eyes, nose, mouth, distinctive features, proportions
+
+SCORING:
+95-100: Perfect match
+85-94: Strong match, minor deviations
+70-84: Recognizable but notable differences
+<70: Identity not preserved (FAILED)
+
+OUTPUT JSON:
+{
+  "similarityScore": <0-100>,
+  "isValid": <true if >= 85>,
+  "issues": [<specific problems>],
+  "analysis": "<brief explanation>"
+}
+```
+
+**Example Response**:
+
+```json
+{
+  "similarityScore": 92,
+  "isValid": true,
+  "issues": [],
+  "analysis": "Strong identity match. Face shape, eye characteristics, nose structure, and 
+  distinctive features (dimples, beauty mark, earrings) all preserved accurately. Minor artistic 
+  liberties in hair texture are acceptable for the chosen Cartoon Vector style."
+}
+```
+
+**Temperature**: 0.1 (very deterministic for objective scoring)
+
+---
+
+### 6.10 What This Means For You
+
+**Understanding real prompts helps you**:
+
+1. **Write Better Text-to-Image Descriptions**  
+   You see the AI expects structured data → Describe your character systematically (face, eyes, hair, clothes)
+
+2. **Choose Appropriate Photos**  
+   The identity template extracts bone structure, eye shape, nose → These must be clearly visible in your photo
+
+3. **Understand Style Limitations**  
+   WPAP requires "Flat" shading, Photorealistic needs "None" lines → The system prevents impossible combinations
+
+4. **Optimize Pack Size**  
+   Each sticker costs 1 credit but uses the same identity template → Large packs are cost-effective!
+
+5. **Trust the Validation System**  
+   Scores 85-94 are "Strong match" → Don't obsess over perfect 100 scores
+
+6. **Speech Bubbles Are Baked In**  
+   The text goes directly into the expression description → AI generates it as part of the image, not overlaid
+
+7. **Animation is Different**  
+   Video model interprets motion naturally → You don't need to specify "move up and down" for bouncing
+
+---
+
 **END OF GUIDE**
 
 For questions, issues, or feedback, please refer to the project documentation or submit an issue on the repository.

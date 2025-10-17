@@ -3706,6 +3706,498 @@ Because the prompts encode **real VFX principles**:
 
 ---
 
+## 13. ACTUAL GENERATION PROMPTS: COMPLETE EXAMPLES
+
+This section shows **real, filled-in prompts** with actual user inputs and settings. No more templates - these are exactly what gets sent to the AI!
+
+### 13.1 Complete Simple Mode Example
+
+**User Input**:
+- Background Prompt: "A cyberpunk Tokyo street at night with neon signs"
+- Foreground Prompt: (left blank)
+- Mode: Simple (one-click)
+
+**Photo**: Single person in casual clothes
+
+---
+
+#### **Step 1: Image Segmentation** (FREE)
+
+**Prompt Sent**:
+```
+Your single task is to perform a perfect, studio-quality background removal on this image. 
+Isolate all foreground subjects from their background. The output MUST have a transparent 
+alpha channel. Do not add any effects or change the subjects themselves.
+```
+
+**Result**: Clean cutout with transparent background
+
+**Credit Cost**: 0 credits (free)
+
+---
+
+#### **Step 2: Background Generation** (5 credits)
+
+**Full VFX Compositor Prompt Sent**:
+
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic scene creation and lighting design. You specialize in creating environments 
+that are perfectly suited for seamless photo compositing.
+
+**Your Core Expertise:**
+- Photorealistic Scene Generation: Creating believable, high-fidelity environments
+- Lighting Design: Establishing clear, consistent light sources and atmospheric conditions
+- Composition for Compositing: Designing scenes with appropriate depth, perspective, and space for subject integration
+- Color & Mood: Creating cohesive color palettes that support photorealistic integration
+
+**MISSION:** Generate a photorealistic background scene that will serve as the environment 
+for a photo remix composite. This scene must have clear lighting direction, appropriate depth, 
+and realistic atmospheric qualities to allow seamless subject integration.
+
+**SCENE DESCRIPTION:**
+A cyberpunk Tokyo street at night with neon signs
+
+**CRITICAL REQUIREMENTS:**
+- Scene must be photorealistic with clear, identifiable light sources
+- Lighting direction and color temperature must be consistent throughout the scene
+- Depth and perspective must be clearly established
+- Scene should have appropriate atmospheric qualities (shadows, ambient light, environmental effects)
+- High resolution and detail quality suitable for professional compositing
+- Color palette should be cohesive and support natural subject integration
+
+**CONTEXT:** The original photo context is provided as reference for matching general style, 
+mood, or technical qualities if applicable to the requested scene.
+
+**OUTPUT:** A single, high-resolution, photorealistic background scene optimized for compositing 
+with a foreground subject.
+```
+
+**Model**: `imagen-4.0-generate-001`  
+**Credit Cost**: 5 credits  
+**Result**: Neon-lit Tokyo street with rain reflections, clear lighting from pink/blue signs
+
+---
+
+#### **Step 3: Foreground Remix** (SKIPPED - blank prompt)
+
+**Foreground prompt was blank** → This step is skipped entirely
+
+**Credit Savings**: 5 credits saved!
+
+**Why**: The VFX Compositor will handle lighting/color matching in the final composite step
+
+---
+
+#### **Step 4: Final Compositing** (5 credits)
+
+**Full VFX Compositor Prompt Sent**:
+
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic compositing, light, and shadow. You are the final step in creating seamless, 
+believable composite images where subjects look naturally present in their new environment.
+
+**Your Core Expertise:**
+- Photorealistic Integration: Making pre-segmented subjects look physically present in new scenes
+- Light & Color Matching: Analyzing scene lighting and re-lighting subjects to match perfectly
+- Shadow Generation: Creating realistic shadows that anchor subjects to their environment
+- Edge Blending: Refining cutout edges to eliminate any "pasted-on" appearance
+- Color Grading: Unifying the color palette across all elements for seamless integration
+
+**PRIMARY DIRECTIVE:** Your highest priority is to create a seamless, photorealistic composite 
+where the foreground subject(s) look naturally and physically present in the background scene. 
+The final image must be indistinguishable from a photograph taken in that environment.
+
+**THE DIGITAL DAILIES:**
+You have been provided with:
+- A background scene (first image)
+- One or more pre-segmented foreground subject(s) with transparent backgrounds
+- Composition specifications
+
+**CRITICAL CONSTRAINTS:**
+- Lighting & Shadow: The lighting on each subject MUST be altered to match the direction, 
+  color, and intensity of the lighting in the background scene. You MUST generate realistic 
+  shadows cast by each subject onto the background.
+- Color Grading: The final image MUST have a unified color grade. Subjects cannot look 
+  "warmer" or "cooler" than their environment.
+- Perspective & Scale: Position and scale subjects consistently with the background's perspective.
+- Edge Blending: Meticulously refine subject edges to eliminate harsh cutout artifacts.
+
+**COMPOSITION SPECIFICATIONS:**
+- Character Position: center
+- Character Size: 70% of scene height
+- Blending Mode: Realistic
+- Lighting Style: Match Background
+
+**OUTPUT:** A single, high-resolution, photorealistic composite image where all subjects 
+are seamlessly integrated into the background scene.
+```
+
+**Inputs Provided to AI**:
+1. **Background Image**: The generated Tokyo street (from step 2)
+2. **Foreground Cutout**: Your person with transparent background (from step 1)
+3. **Text Prompt**: The complete VFX prompt above
+
+**Model**: `gemini-2.5-flash-image-preview`  
+**Credit Cost**: 5 credits
+
+**What the AI Does**:
+- Analyzes neon pink/blue lighting from signs
+- Re-lights your subject with matching pink/blue glow
+- Adds realistic shadow on wet street
+- Applies cyberpunk color grade (cool tones, neon accents)
+- Blends edges seamlessly
+
+**Final Result**: You standing in Tokyo, neon lights reflecting on your clothes, looking like you were photographed there!
+
+**Total Cost**: 10 credits (5 background + 0 foreground + 5 composite)
+
+---
+
+### 13.2 Complete Advanced Mode Example with Foreground Modifications
+
+**User Input**:
+- Background Prompt: "An ancient Egyptian temple with golden sunlight streaming through columns"
+- Foreground Prompt: "Transform into an Egyptian pharaoh with golden headdress and royal robes"
+- Mode: Advanced
+
+**Photo**: Single person in modern clothes
+
+---
+
+#### **Step 1: Image Segmentation** (FREE)
+
+Same as before - creates clean cutout.
+
+---
+
+#### **Step 2: Background Generation** (5 credits)
+
+**Actual Prompt Sent**:
+
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic scene creation and lighting design. You specialize in creating environments 
+that are perfectly suited for seamless photo compositing.
+
+[...VFX expertise section same as before...]
+
+**SCENE DESCRIPTION:**
+An ancient Egyptian temple with golden sunlight streaming through columns
+
+**CRITICAL REQUIREMENTS:**
+- Scene must be photorealistic with clear, identifiable light sources
+- Lighting direction and color temperature must be consistent throughout the scene
+- Depth and perspective must be clearly established
+- Scene should have appropriate atmospheric qualities (shadows, ambient light, environmental effects)
+- High resolution and detail quality suitable for professional compositing
+- Color palette should be cohesive and support natural subject integration
+
+[...rest same as before...]
+```
+
+**Result**: Majestic temple with strong directional sunlight from left side, warm golden tones
+
+---
+
+#### **Step 3: Foreground Remix** (5 credits)
+
+**NOW THIS STEP RUNS!** Because you provided a foreground prompt.
+
+**Actual Prompt Sent**:
+
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic integration, light, and shadow. You specialize in seamlessly blending 
+real-world elements with artistic modifications while preserving core identity.
+
+**Your Core Expertise:**
+- Photorealistic Integration: Seamlessly blending modifications with the original subject
+- Identity Preservation: Maintaining exact facial features and defining characteristics
+- Edge Blending: Creating natural transitions without harsh cutout edges
+- Light & Color Matching: Ensuring artistic modifications match the subject's existing lighting
+
+**PRIMARY DIRECTIVE:** The person's core facial features, bone structure, and identity 
+MUST be preserved exactly. Only the requested artistic modifications should be applied.
+
+**TASK:** Artistically modify the person in this pre-segmented image according to the 
+following instruction, while maintaining their exact identity and facial features: 
+"Transform into an Egyptian pharaoh with golden headdress and royal robes"
+
+**CONSTRAINTS:**
+- The person's facial structure, features, and identity are sacrosanct and cannot be altered
+- Apply only the specific modifications requested in the instruction
+- Maintain photorealistic quality in all modifications
+- The output image MUST retain its transparent background (alpha channel)
+- Blend all modifications seamlessly with the original subject
+
+**OUTPUT:** A single, high-quality image with transparent background, featuring the requested 
+modifications while preserving the person's exact identity.
+```
+
+**Inputs**:
+- **Cutout Image**: Your person with transparent background
+- **Text Prompt**: The complete prompt above
+
+**What the AI Does**:
+- Keeps your face EXACTLY as is
+- Adds golden pharaoh headdress (nemes)
+- Adds royal Egyptian robes
+- Maintains transparent background
+- Preserves your identity 100%
+
+**Result**: You in pharaoh costume, still recognizably YOU, transparent background
+
+**Credit Cost**: 5 credits
+
+---
+
+#### **Step 4: Final Compositing** (5 credits)
+
+**Actual Prompt Sent**:
+
+```
+[Same VFX Compositor prompt as Simple Mode example]
+
+**COMPOSITION SPECIFICATIONS:**
+- Character Position: center
+- Character Size: 65% of scene height
+- Blending Mode: Realistic
+- Lighting Style: Match Background
+```
+
+**Inputs**:
+1. **Background**: Egyptian temple with golden sunlight
+2. **Modified Foreground**: You in pharaoh costume (from step 3)
+
+**What the AI Does**:
+- Analyzes warm golden sunlight direction (from left)
+- Re-lights you to match (golden glow from left side)
+- Generates shadow cast by your body onto temple floor
+- Applies unified warm color grade
+- Blends edges seamlessly
+
+**Final Result**: You as an Egyptian pharaoh standing in a temple, sunlight streaming from the left, casting realistic shadows, looking like a scene from a historical film!
+
+**Total Cost**: 15 credits (5 background + 5 foreground + 5 composite)
+
+---
+
+### 13.3 Group Photo Example (2 People)
+
+**User Input**:
+- Background Prompt: "A tropical beach at sunset with palm trees"
+- Foreground Prompt: (blank)
+- Photo: 2 friends standing together
+
+---
+
+#### **Step 1: Image Segmentation** (FREE)
+
+Segments both people together, preserving their relative positions.
+
+---
+
+#### **Step 2: Subject Detection** (FREE)
+
+**Prompt Sent**:
+
+```
+Analyze this image with a transparent background. It contains one or more pre-segmented people.
+Your task is to identify each individual person and provide a JSON array.
+For each person, provide:
+- 'id': A unique string identifier (e.g., "subject_1").
+- 'description': A brief, non-identifying description (e.g., "person on the left with red shirt").
+- 'boundingBox': A normalized bounding box [y_min, x_min, y_max, x_max] for that individual person.
+
+Return ONLY the raw JSON array. If no one is found, return an empty array.
+```
+
+**AI Response**:
+```json
+[
+  {
+    "id": "subject_1",
+    "description": "person on left wearing blue t-shirt",
+    "boundingBox": [0.1, 0.05, 0.95, 0.48]
+  },
+  {
+    "id": "subject_2",
+    "description": "person on right wearing white dress",
+    "boundingBox": [0.12, 0.52, 0.93, 0.95]
+  }
+]
+```
+
+**System Action**: Crops each person individually for separate processing
+
+---
+
+#### **Step 3: Background Generation** (5 credits)
+
+Same VFX Compositor prompt, but:
+
+```
+**SCENE DESCRIPTION:**
+A tropical beach at sunset with palm trees
+```
+
+**Result**: Beautiful beach scene with orange sunset, palm tree silhouettes
+
+---
+
+#### **Step 4: Foreground Remix Per Person** (SKIPPED - blank prompt)
+
+No foreground prompt → Both people remain unmodified
+
+---
+
+#### **Step 5: Final Compositing** (5 credits)
+
+**Prompt Sent** (note the plural language!):
+
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic compositing, light, and shadow. You are the final step in creating seamless, 
+believable composite images where subjects look naturally present in their new environment.
+
+[...VFX expertise same as before...]
+
+**THE DIGITAL DAILIES:**
+You have been provided with:
+- A background scene (first image)
+- Two pre-segmented foreground subjects with transparent backgrounds
+- Composition specifications
+
+**CRITICAL CONSTRAINTS:**
+- Lighting & Shadow: The lighting on EACH subject MUST be altered to match the direction, 
+  color, and intensity of the lighting in the background scene. You MUST generate realistic 
+  shadows cast by EACH subject onto the background.
+- Color Grading: The final image MUST have a unified color grade. Subjects cannot look 
+  "warmer" or "cooler" than their environment.
+- Perspective & Scale: Position and scale subjects consistently with the background's perspective.
+- Edge Blending: Meticulously refine subject edges to eliminate harsh cutout artifacts.
+
+**COMPOSITION SPECIFICATIONS:**
+- Character Position: center
+- Character Size: 70% of scene height
+- Blending Mode: Realistic
+- Lighting Style: Match Background
+
+**OUTPUT:** A single, high-resolution, photorealistic composite image where all subjects 
+are seamlessly integrated into the background scene.
+```
+
+**Inputs**:
+1. **Background**: Beach sunset scene
+2. **Foreground Subject 1**: Person in blue shirt (cutout)
+3. **Foreground Subject 2**: Person in white dress (cutout)
+
+**What the AI Does**:
+- Lights both people with warm orange sunset glow
+- Generates TWO shadows on sand (one per person)
+- Maintains their relative positions
+- Applies unified sunset color grade to both
+- Blends edges seamlessly
+
+**Final Result**: Both friends on a tropical beach at sunset, perfectly lit and integrated!
+
+**Total Cost**: 10 credits (5 background + 0 foreground × 2 + 5 composite)
+
+---
+
+### 13.4 AI Scene Suggestions Prompt
+
+**Purpose**: Analyzes your photo and suggests 4 creative remix ideas  
+**Model**: `gemini-2.5-flash`  
+**When**: Automatically after you upload a photo
+
+**Actual Prompt Sent**:
+
+```
+You are a creative director for a visual effects studio. Analyze the subjects 
+and context of this image and generate 4 diverse, creative ideas for a "photo remix". 
+For each idea, provide a JSON object with three properties: 
+- "title" (a short, catchy name for the idea)
+- "backgroundPrompt" (a detailed prompt for an AI to generate a new background scene)
+- "foregroundPrompt" (a detailed prompt for how to artistically modify the subjects to fit the new scene)
+
+Return your answer as a valid JSON array of these objects.
+```
+
+**Example AI Response** (for a photo of someone in a park):
+
+```json
+[
+  {
+    "title": "Superhero Landing",
+    "backgroundPrompt": "A dramatic urban rooftop at sunset with city skyline in background, debris flying, action movie cinematography with volumetric lighting and lens flare",
+    "foregroundPrompt": "Transform subject into superhero mid-action pose with flowing cape, dynamic superhero suit in primary colors, heroic confident expression"
+  },
+  {
+    "title": "Enchanted Forest",
+    "backgroundPrompt": "A mystical ancient forest with glowing mushrooms, magical fireflies, ethereal mist, and shafts of moonlight through dense canopy",
+    "foregroundPrompt": "Add ethereal elf ears, flowing fantasy robes in earth tones, mystical staff with glowing crystal, subtle magical aura around subject"
+  },
+  {
+    "title": "Retro Diner",
+    "backgroundPrompt": "A 1950s American diner interior with red leather booths, checkered floor, jukebox, neon signs, vintage Coca-Cola posters, warm nostalgic lighting",
+    "foregroundPrompt": "Style subject in 1950s fashion - leather jacket or poodle skirt, vintage hairstyle, holding milkshake, posed leaning against jukebox"
+  },
+  {
+    "title": "Space Explorer",
+    "backgroundPrompt": "Inside a futuristic spaceship cockpit with holographic displays, view of colorful nebula through large window, advanced control panels with glowing buttons",
+    "foregroundPrompt": "Dress subject in sleek astronaut suit with helmet held under arm, NASA-style patches, give confident explorer expression looking toward stars"
+  }
+]
+```
+
+**What You See**: 4 clickable suggestion cards with these ideas!
+
+**Credit Cost**: 0 credits (free)
+
+---
+
+### 13.5 Temperature Settings Across Models
+
+| Step | Model | Temperature | Why |
+|------|-------|-------------|-----|
+| **Analysis & Suggestions** | gemini-2.5-flash | 0.8 | Creative, diverse ideas |
+| **Segmentation** | gemini-2.5-flash-image-preview | 0.1 | Precise, technical cutout |
+| **Subject Detection** | gemini-2.5-flash | 0.1 | Accurate JSON bounding boxes |
+| **Background** | imagen-4.0-generate-001 | 0.7 | Creative but controlled scene generation |
+| **Foreground Remix** | gemini-2.5-flash-image-preview | 0.5 | Balance identity preservation + creativity |
+| **Compositing** | gemini-2.5-flash-image-preview | 0.3 | Deterministic, technical integration |
+
+**Key Insight**: Lower temperature for technical tasks (segmentation, compositing), higher for creative tasks (suggestions, backgrounds)!
+
+---
+
+### 13.6 What This Means For You
+
+**Now that you've seen the real prompts:**
+
+1. **Background Prompts Should Be Scene-Focused**  
+   The AI is looking for lighting, atmosphere, depth → Describe the PLACE, not the person
+
+2. **Foreground Prompts Should Be Costume/Prop-Focused**  
+   The AI preserves your face automatically → Describe what to ADD, not what to change
+
+3. **Blank Foreground = Cost Savings**  
+   5 credits saved + faster generation → Use it for pure location changes!
+
+4. **The VFX Compositor is SMART**  
+   It automatically analyzes lighting direction and matches it → Trust the system!
+
+5. **Group Photos Work Differently**  
+   Each person is processed separately then composited together → Costs don't multiply as much as you'd think!
+
+6. **AI Suggestions Are High-Quality**  
+   The creative director persona generates professional ideas → Use them as inspiration even if you don't click them!
+
+---
+
 **END OF PHOTO REMIX COMPLETE GUIDE**
 
 For questions, issues, or feedback about the photo remix feature, please refer to the project documentation or submit an issue on the repository.

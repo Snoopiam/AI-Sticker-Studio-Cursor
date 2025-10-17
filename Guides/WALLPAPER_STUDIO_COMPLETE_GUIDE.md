@@ -3487,6 +3487,529 @@ Understanding these prompts helps you:
 
 ---
 
+## 10. ACTUAL GENERATION PROMPTS: COMPLETE EXAMPLES
+
+This section shows **real, filled-in prompts** with actual user settings. No more templates - these are exactly what gets sent to the AI models!
+
+### 10.1 Legacy Mode Wallpaper (No Characters)
+
+**User Input**:
+- Custom Prompt: "A serene Japanese zen garden with cherry blossoms and koi pond"
+- Size: Desktop Wide (16:9)
+- Quality: High
+- Smart Context: OFF (no characters selected)
+
+**Actual Prompt Sent**:
+
+```
+A serene Japanese zen garden with cherry blossoms and koi pond
+
+Technical specifications:
+- Aspect ratio: 16:9
+- Resolution: High quality
+- Style: Photorealistic
+```
+
+**Model**: `imagen-4.0-generate-001`  
+**Temperature**: 0.8 (creative scene generation)  
+**Credit Cost**: 3 credits
+
+**What Happens**: AI generates the entire scene from text description only. Fast and simple!
+
+**Result**: Beautiful zen garden wallpaper, no characters, pure landscape.
+
+---
+
+### 10.2 Legacy Mode with Character Description (Text-Based)
+
+**User Input**:
+- Preset: "Cyberpunk City - Neon Nights"
+- Size: Phone Portrait (9:16)
+- Quality: Ultra
+- Smart Context: OFF
+- Selected Character: "Alex" (Male, Young Adult)
+
+**Expanded Preset Prompt**:
+```
+A futuristic cyberpunk cityscape at night with towering neon-lit skyscrapers. 
+Rain-slicked streets reflect vibrant pink, blue, and purple neon signs. 
+Flying vehicles zoom between buildings. Holographic advertisements float in the air. 
+Steam rises from grates. The atmosphere is moody and cinematic with dramatic lighting 
+from neon sources. Blade Runner aesthetic with high detail and photorealistic quality.
+
+Include Male, Young Adult person in the center of the scene, 
+positioned prominently at 70% of scene height.
+```
+
+**Model**: `imagen-4.0-generate-001`  
+**Credit Cost**: 3 credits
+
+**What Happens**: AI generates entire scene INCLUDING a generic person matching the description.
+
+**Limitations**:
+- ❌ Person looks generic (not your actual character Alex)
+- ❌ Each generation creates different-looking person
+- ❌ No identity consistency
+- ❌ Person may look "AI-generated" and artificial
+
+**Result**: Cyberpunk city with A person in it, but not necessarily YOUR character.
+
+---
+
+### 10.3 Smart Context Adaptation (With Characters)
+
+**User Input**:
+- Preset: "Cyberpunk City - Neon Nights"
+- Size: Desktop Wide (16:9)
+- Quality: High
+- Smart Context: ON ✅
+- Selected Characters: "Alex" (1 character)
+- Character Position: Center
+- Character Size: 70%
+- Blending Mode: Realistic
+- Lighting Style: Match Background
+
+---
+
+#### **Step 1: Character Image Retrieval**
+
+System retrieves Alex's saved image from IndexedDB cache.
+
+---
+
+#### **Step 2: Character Segmentation** (Included in 3-credit cost)
+
+**Prompt Sent**:
+```
+Your single task is to perform a perfect, studio-quality background removal on this image. 
+Isolate all foreground subjects from their background. The output MUST have a transparent 
+alpha channel. Do not add any effects or change the subjects themselves.
+```
+
+**Model**: `gemini-2.5-flash-image-preview`  
+**Temperature**: 0.1 (precise, technical cutout)
+
+**Result**: Alex's character cutout with transparent background
+
+---
+
+#### **Step 3: Unified Scene Generation** (The Magic!)
+
+**Complete VFX Compositor Prompt Sent**:
+
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic integration, light, and shadow. You specialize in seamlessly blending 
+real-world elements with AI-generated environments.
+
+**MISSION:**
+You have been provided with character cutouts that need to be integrated into a new wallpaper scene. 
+Your job is to create a seamless, photorealistic composite where these characters look naturally 
+and physically present in the new environment.
+
+**CHARACTERS TO INTEGRATE:**
+Character: Alex (Male, Young Adult)
+
+**SCENE DESCRIPTION:**
+A futuristic cyberpunk cityscape at night with towering neon-lit skyscrapers. 
+Rain-slicked streets reflect vibrant pink, blue, and purple neon signs. 
+Flying vehicles zoom between buildings. Holographic advertisements float in the air. 
+Steam rises from grates. The atmosphere is moody and cinematic with dramatic lighting 
+from neon sources. Blade Runner aesthetic with high detail and photorealistic quality.
+
+**COMPOSITION SPECIFICATIONS:**
+- Wallpaper Size: Desktop Wide (16:9)
+- Character Position: center
+- Character Size: 70% of scene height
+- Quality Level: High
+- Blending Mode: Realistic
+- Lighting Style: Match Background
+
+**UNBREAKABLE CONSTRAINTS:**
+- PRIMARY DIRECTIVE: Create a seamless, photorealistic composite where the characters 
+  look naturally present in the scene
+- Lighting & Shadow: Match the lighting direction, color, and intensity between characters 
+  and background
+- Color Grading: Apply unified color grade so characters don't look "pasted on"
+- Perspective & Scale: Position characters consistently with the scene's perspective
+- Edge Blending: Eliminate any harsh cutout edges to create natural integration
+
+**OUTPUT:**
+Generate a single, high-resolution composite wallpaper image that seamlessly integrates 
+all provided character cutouts into the described scene.
+```
+
+**Inputs Provided to AI**:
+1. **Character Cutout**: Alex with transparent background
+2. **Text Prompt**: The complete VFX prompt above
+
+**Model**: `gemini-2.5-flash-image-preview`  
+**Temperature**: 0.6 (balanced creativity + accuracy)  
+**Credit Cost**: 3 credits (total for entire wallpaper)
+
+**What the AI Does IN ONE OPERATION**:
+1. Generates the cyberpunk cityscape
+2. Analyzes neon pink/blue/purple lighting from signs
+3. Positions Alex in center at 70% height
+4. Re-lights Alex with matching neon glow
+5. Adds realistic shadow cast by Alex on wet street
+6. Applies unified cyberpunk color grade (cool tones, neon accents)
+7. Blends Alex's edges seamlessly
+8. Creates single 16:9 wallpaper image
+
+**Final Result**: Alex standing in a cyberpunk Tokyo street, neon lights reflecting on his clothes, realistic shadow on ground, looking like he was photographed in that city. Perfect for desktop wallpaper!
+
+**Key Difference from Legacy**: Your ACTUAL character Alex (same face as your sticker library), not a generic person!
+
+---
+
+### 10.4 Multiple Characters with Smart Context
+
+**User Input**:
+- Custom Prompt: "An epic Lord of the Rings-style fantasy landscape with misty mountains"
+- Size: Desktop Ultrawide (21:9)
+- Smart Context: ON
+- Selected Characters: "Sarah", "Mike", "Emma" (3 characters)
+- Character Position: Center
+- Character Size: 60% (smaller for 3 people)
+- Lighting Style: Enhanced
+
+---
+
+#### **Step 1: Character Retrieval & Segmentation**
+
+For each character (Sarah, Mike, Emma):
+1. Retrieve image from cache
+2. Segment to remove background
+3. Create transparent cutout
+
+**All done within the 3-credit cost!**
+
+---
+
+#### **Step 2: Unified Scene Generation**
+
+**VFX Compositor Prompt**:
+
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic integration, light, and shadow. You specialize in seamlessly blending 
+real-world elements with AI-generated environments.
+
+**MISSION:**
+You have been provided with character cutouts that need to be integrated into a new wallpaper scene. 
+Your job is to create a seamless, photorealistic composite where these characters look naturally 
+and physically present in the new environment.
+
+**CHARACTERS TO INTEGRATE:**
+Character: Sarah (Female, Young Adult)
+Character: Mike (Male, Adult)
+Character: Emma (Female, Teenager)
+
+**SCENE DESCRIPTION:**
+An epic Lord of the Rings-style fantasy landscape with misty mountains, rolling green hills, 
+ancient forests, and dramatic cloudy sky with sunbeams breaking through.
+
+**COMPOSITION SPECIFICATIONS:**
+- Wallpaper Size: Desktop Ultrawide (21:9)
+- Character Position: center
+- Character Size: 60% of scene height
+- Quality Level: High
+- Blending Mode: Realistic
+- Lighting Style: Enhanced
+
+**UNBREAKABLE CONSTRAINTS:**
+- PRIMARY DIRECTIVE: Create a seamless, photorealistic composite where the characters 
+  look naturally present in the scene
+- Lighting & Shadow: Match the lighting direction, color, and intensity between characters 
+  and background. Apply enhanced dramatic lighting as specified.
+- Color Grading: Apply unified color grade so characters don't look "pasted on"
+- Perspective & Scale: Position characters consistently with the scene's perspective
+- Edge Blending: Eliminate any harsh cutout edges to create natural integration
+- Multiple Characters: Ensure proper spacing, depth, and interaction between all three characters
+
+**OUTPUT:**
+Generate a single, high-resolution 21:9 composite wallpaper image that seamlessly integrates 
+all provided character cutouts into the fantasy landscape.
+```
+
+**Inputs**:
+1. **Sarah's Cutout**: Transparent background
+2. **Mike's Cutout**: Transparent background
+3. **Emma's Cutout**: Transparent background
+4. **Text Prompt**: Complete VFX prompt
+
+**What the AI Does**:
+- Generates epic fantasy landscape with misty mountains
+- Positions all 3 characters in center with proper spacing
+- Analyzes dramatic sunbeam lighting from clouds
+- Applies enhanced lighting to all 3 (golden glow from above)
+- Generates 3 individual shadows on grass
+- Creates depth (maybe Sarah in foreground, Mike and Emma slightly behind)
+- Applies unified fantasy color grade (epic, saturated greens/blues)
+- Blends all edges seamlessly
+
+**Result**: Sarah, Mike, and Emma standing on a fantasy landscape like they're in a movie poster - all YOUR actual characters maintaining their identities!
+
+**Credit Cost**: Still just 3 credits!
+
+---
+
+### 10.5 Custom Prompt + Smart Context (Advanced User)
+
+**User Input**:
+- Custom Prompt: "A cozy cabin interior with fireplace, bookshelves, and warm ambient lighting from candles and fire glow, rainy window view, autumn vibes"
+- Size: Desktop Standard (16:10)
+- Smart Context: ON
+- Character: "Maya" (1 character)
+- Character Position: Left (to leave room for fireplace on right)
+- Character Size: 55% (cozy interior scale)
+- Blending Mode: Seamless
+- Lighting Style: Soft
+
+**VFX Compositor Prompt**:
+
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic integration, light, and shadow. You specialize in seamlessly blending 
+real-world elements with AI-generated environments.
+
+**MISSION:**
+You have been provided with character cutouts that need to be integrated into a new wallpaper scene. 
+Your job is to create a seamless, photorealistic composite where these characters look naturally 
+and physically present in the new environment.
+
+**CHARACTERS TO INTEGRATE:**
+Character: Maya (Female, Adult)
+
+**SCENE DESCRIPTION:**
+A cozy cabin interior with fireplace, bookshelves, and warm ambient lighting from candles 
+and fire glow, rainy window view, autumn vibes
+
+**COMPOSITION SPECIFICATIONS:**
+- Wallpaper Size: Desktop Standard (16:10)
+- Character Position: left
+- Character Size: 55% of scene height
+- Quality Level: High
+- Blending Mode: Seamless
+- Lighting Style: Soft
+
+**UNBREAKABLE CONSTRAINTS:**
+- PRIMARY DIRECTIVE: Create a seamless, photorealistic composite where the character 
+  looks naturally present in the scene
+- Lighting & Shadow: The character MUST be lit with warm, soft fireplace glow matching 
+  the scene. Apply soft, diffused lighting as specified.
+- Color Grading: Apply unified warm, cozy color grade (amber/orange tones from fire)
+- Perspective & Scale: Position character consistently with interior perspective
+- Edge Blending: Create perfect invisible blending - character should look photographed in this cabin
+
+**OUTPUT:**
+Generate a single, high-resolution 16:10 composite wallpaper image that seamlessly integrates 
+Maya into the cozy cabin interior.
+```
+
+**What the AI Does**:
+- Generates cozy cabin with fireplace, bookshelves, rainy window
+- Positions Maya on left side (leaves fireplace visible on right)
+- Analyzes warm orange/amber fireplace lighting
+- Applies soft, warm glow to Maya from fire direction
+- Creates subtle shadow behind Maya
+- Applies unified cozy color grade (warm tones throughout)
+- Uses "Seamless" blending mode for invisible edges
+- Creates intimate, cozy atmosphere
+
+**Result**: Maya relaxing in a cozy cabin, fireplace glowing, rain on windows, looking like a professional lifestyle photograph!
+
+---
+
+### 10.6 Preset with Smart Context
+
+**User Input**:
+- Preset: "Marvel Heroes – Spider-Man Adventure"
+- Size: Phone Portrait (9:16)
+- Smart Context: ON
+- Character: "Jake" (1 character)
+
+**Preset Expansion** (automatic):
+
+```
+A dynamic Spider-Man-inspired scene with New York City skyscrapers from a rooftop perspective. 
+Dramatic sunset lighting. Spider-web patterns subtly integrated into the composition. 
+Heroic, action-movie cinematography.
+```
+
+**Full VFX Prompt Sent**:
+
+```
+[...VFX Compositor intro same as before...]
+
+**CHARACTERS TO INTEGRATE:**
+Character: Jake (Male, Young Adult)
+
+**SCENE DESCRIPTION:**
+A dynamic Spider-Man-inspired scene with New York City skyscrapers from a rooftop perspective. 
+Dramatic sunset lighting. Spider-web patterns subtly integrated into the composition. 
+Heroic, action-movie cinematography.
+
+**COMPOSITION SPECIFICATIONS:**
+- Wallpaper Size: Phone Portrait (9:16)
+- Character Position: center
+- Character Size: 75% of scene height  ← Larger for phone portrait
+- Quality Level: High
+- Blending Mode: Dramatic
+- Lighting Style: Enhanced
+
+**UNBREAKABLE CONSTRAINTS:**
+[...constraints same as previous examples...]
+
+**OUTPUT:**
+Generate a single, high-resolution 9:16 composite wallpaper image optimized for phone screens 
+that seamlessly integrates Jake into the Spider-Man inspired NYC rooftop scene.
+```
+
+**What the AI Does**:
+- Generates NYC rooftop view with dramatic sunset
+- Adds subtle spider-web visual elements
+- Positions Jake prominently (75% height for phone)
+- Applies dramatic sunset lighting (orange/purple)
+- Uses "Dramatic" blending mode (enhanced contrast, strong shadows)
+- Applies heroic action-movie color grade
+- Creates dynamic, superhero-like atmosphere
+
+**Result**: Jake on a NYC rooftop at sunset with action-movie vibe - perfect phone wallpaper!
+
+---
+
+### 10.7 Comparison: Legacy vs Smart Context Side-by-Side
+
+**Same Input: "A space station interior with Earth visible through large windows"**
+
+#### **Legacy Mode Prompt**:
+```
+A space station interior with Earth visible through large windows.
+Include Male, Young Adult person in the center of the scene, 
+positioned prominently at 70% of scene height.
+
+Technical specifications:
+- Aspect ratio: 16:9
+- Resolution: High quality
+- Style: Photorealistic
+```
+
+**Result**: 
+- ✅ Beautiful space station generated
+- ❌ Generic astronaut invented by AI
+- ❌ Looks different every time
+- ❌ Not your character
+- Cost: 3 credits
+
+---
+
+#### **Smart Context Mode Prompt**:
+```
+You are a Lead VFX Compositor from a world-class film studio...
+
+**CHARACTERS TO INTEGRATE:**
+Character: [YOUR ACTUAL CHARACTER] (Male, Young Adult)
+
+**SCENE DESCRIPTION:**
+A space station interior with Earth visible through large windows
+
+[...VFX Compositor prompt with lighting/shadow/color constraints...]
+
+**OUTPUT:**
+Generate a single, high-resolution composite wallpaper image that seamlessly integrates 
+[YOUR CHARACTER]'s cutout into the space station interior.
+```
+
+**Inputs**: Background generation prompt + YOUR character's actual cutout image
+
+**Result**:
+- ✅ Beautiful space station generated
+- ✅ YOUR ACTUAL CHARACTER (same face as your stickers)
+- ✅ Consistent across all generations
+- ✅ Professional VFX-quality integration
+- ✅ Realistic lighting and shadows
+- Cost: 3 credits (same!)
+
+---
+
+### 10.8 Temperature & Model Settings
+
+| Task | Model | Temperature | Reasoning |
+|------|-------|-------------|-----------|
+| **Legacy Wallpaper** | imagen-4.0-generate-001 | 0.8 | High creativity for scene generation |
+| **Character Segmentation** | gemini-2.5-flash-image-preview | 0.1 | Precise technical cutout |
+| **Smart Context Scene** | gemini-2.5-flash-image-preview | 0.6 | Balance creativity + technical accuracy |
+
+**Why Different Models?**
+
+- **Legacy Mode**: Uses `imagen-4.0` (pure text-to-image model) - fast, simple, no image inputs
+- **Smart Context**: Uses `gemini-2.5-flash-image-preview` (multimodal model) - accepts multiple images + text, performs compositing
+
+**Why Temperature 0.6 for Smart Context?**
+
+- Needs **creativity** to generate beautiful scenes
+- Needs **determinism** for technical lighting/shadow calculations
+- 0.6 is the sweet spot between both!
+
+---
+
+### 10.9 What This Means For You
+
+**Now that you've seen real prompts:**
+
+1. **Smart Context is Worth It**  
+   Same 3-credit cost but professional VFX-quality integration → Always use it with characters!
+
+2. **Prompt Writing for Smart Context**  
+   Focus on describing THE SCENE (lighting, mood, atmosphere) → The AI handles character integration automatically
+
+3. **Character Position Matters**  
+   "Left" positions character on left, leaving right side open for scene elements → Think about composition!
+
+4. **Multiple Characters Don't Cost More**  
+   3 characters = same 3 credits → The VFX Compositor handles them all in one operation!
+
+5. **Blending Modes Affect the Prompt**  
+   "Realistic" = natural, "Dramatic" = enhanced contrast, "Seamless" = invisible blending → Choose based on desired aesthetic
+
+6. **Presets Are Professionally Crafted**  
+   They include lighting details, mood, style → Use them as templates for your custom prompts!
+
+7. **Legacy Mode is Fast But Limited**  
+   Use it for background-only wallpapers (no characters) → 10 seconds vs 30 seconds for Smart Context
+
+---
+
+### 10.10 Behind the Scenes: Why Smart Context Takes 20-30 Seconds
+
+**The Process**:
+
+1. **Retrieve Images** (2 seconds)
+   - Fetch character images from IndexedDB
+   
+2. **Segment Characters** (3-5 seconds per character)
+   - AI-powered background removal
+   - Edge refinement
+   
+3. **Generate & Composite** (15-20 seconds)
+   - Generate scene
+   - Analyze lighting
+   - Re-light characters
+   - Generate shadows
+   - Apply color grading
+   - Blend edges
+   - Output final image
+
+**Total**: ~25 seconds for 1 character, ~35 seconds for 3 characters
+
+**Legacy Mode**: ~10 seconds (simple text-to-image, no compositing)
+
+**Worth the Wait?** Absolutely! 15 extra seconds for professional VFX-quality integration vs generic AI-generated person.
+
+---
+
 **END OF WALLPAPER STUDIO COMPLETE GUIDE**
 
 For questions, issues, or feedback about the wallpaper feature, please refer to the project documentation or submit an issue on the repository.
