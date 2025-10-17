@@ -3201,6 +3201,341 @@ Great Photo + Detailed Scene Description + VFX Compositor AI = Hollywood-Quality
 
 This section reveals the actual prompts used in the Photo Remix VFX pipeline. Understanding these prompts gives you insight into the professional-grade compositing happening behind the scenes.
 
+### The Four Pillars Prompt Engineering Framework
+
+**Before diving into VFX prompts**, understand that Photo Remix follows the "Four Pillars" framework from the official Prompt Engineering Playbook:
+
+####  **Pillar 1: The Expert Persona - The VFX Compositor 🎭**
+
+The AI is NOT just an artist - it's a **highly specialized technical artist**:
+
+**Persona**:
+```
+You are a Lead VFX Compositor from a world-class film studio. You are a renowned
+expert in photorealistic compositing, with a mastery of light, shadow, and color theory.
+Your primary job is to make the impossible look real.
+```
+
+**Key Skills**:
+- **Photorealistic Integration**: Blending real-world elements (your photo) with CG elements (AI background)
+- **Light & Color Matching**: Analyzing scene lighting and re-lighting subjects to match perfectly
+- **Edge Blending**: Eliminating harsh "pasted-on" appearance
+- **Shadow Generation**: Creating realistic cast shadows
+- **Color Grading**: Unifying the color palette
+
+**Why This Persona**: VFX compositors are THE experts at making separate elements look like one photograph. This persona activates the AI's understanding of professional compositing workflows.
+
+---
+
+#### **Pillar 2: Rich Context - The Digital Dailies 🗺️**
+
+The AI needs all necessary "shot" data:
+
+**Source Data**:
+- Original user-uploaded photo
+- AI-generated cutout image of subject(s)
+- User's `backgroundPrompt`
+- User's (optional) `foregroundPrompt`
+- Composition settings (position, size, lighting style)
+
+**Context Provided**:
+```
+**THE DIGITAL DAILIES:**
+You have been provided with:
+- A background scene (first image)
+- One or more pre-segmented foreground subject(s) with transparent backgrounds
+- Composition specifications
+```
+
+**Why This Works**: The term "digital dailies" is VFX industry terminology for reviewing day's footage. Using professional language activates domain-specific AI knowledge.
+
+---
+
+#### **Pillar 3: Unambiguous Constraints - The Unbreakable Rules 🚦**
+
+These rules are NON-NEGOTIABLE for quality:
+
+**Primary Directive**:
+```
+Your highest priority is to create a seamless, photorealistic composite where the 
+foreground subject(s) look naturally and physically present in the background scene.
+The final image must be indistinguishable from a photograph taken in that environment.
+```
+
+**Critical Constraints**:
+- **Lighting & Shadow**: Subject lighting MUST match background. Realistic shadows MUST be generated.
+- **Color Grading**: Final image MUST have unified color grade. Subject cannot look warmer/cooler than environment.
+- **Perspective & Scale**: Subject MUST be scaled and positioned consistently with background perspective.
+- **Edge Blending**: Cutout edges MUST be refined to eliminate harsh artifacts.
+
+**Why Strict Constraints**: Professional VFX has zero tolerance for "fake-looking" composites. These constraints enforce film-quality standards.
+
+---
+
+#### **Pillar 4: Precise Output Formatting - The Blueprint 📐**
+
+Explicit about deliverable:
+
+**Output Specification**:
+```
+**OUTPUT:** A single, high-resolution, photorealistic composite image where all subjects
+are seamlessly integrated into the background scene.
+```
+
+**Technical Specs**:
+- Format: PNG with alpha channel (for intermediate steps) or final composite
+- Resolution: High-resolution suitable for viewing
+- Quality: Professional, photorealistic
+- Elements: All subjects integrated, shadows generated, edges blended
+
+**Why Explicit**: Ambiguity about output causes failures. Film industry requires exact specifications.
+
+---
+
+### File Structure: Where VFX Prompts Live
+
+**Location in Codebase**:
+
+```
+AI STICKER STUDIO - CORE MODEL/
+├── utils/
+│   └── services/
+│       └── geminiService.ts                  ← VFX PROMPTS HERE
+│           ├── segmentImage()                (Line ~543)
+│           │   └── Background removal prompt
+│           │
+│           ├── remixForeground()             (Line ~564)
+│           │   └── VFX Compositor: Foreground modification prompt
+│           │
+│           ├── generateBackground()          (Line ~605)
+│           │   └── VFX Compositor: Background generation prompt
+│           │
+│           ├── compositeImages()             (Line ~654)
+│           │   └── VFX Compositor: Final compositing prompt
+│           │
+│           ├── detectSubjectsInCutout()      (Line ~714)
+│           │   └── Subject detection for group photos
+│           │
+│           └── analyzeAndSuggestScenes()     (Line ~519)
+│               └── Creative director scene suggestions
+│
+├── hooks/
+│   └── useRemix.ts                          ← Orchestration logic
+│       ├── uploadAndAnalyze()               (Line ~80)
+│       ├── generateSimpleRemix()            (Line ~155)
+│       └── generateAdvancedRemix()          (Line ~226)
+│
+└── Prompt Engineering Playbook - Photo Remix.md  ← Design guidelines
+```
+
+**Key Functions**:
+- **`segmentImage`** (line 543): Removes background
+- **`analyzeAndSuggestScenes`** (line 519): Creative suggestions
+- **`generateBackground`** (line 605): Creates new scene
+- **`remixForeground`** (line 564): Modifies subject(s)
+- **`compositeImages`** (line 654): Final VFX composite
+- **`detectSubjectsInCutout`** (line 714): Identifies individuals in group
+
+---
+
+### The VFX Compositor Persona: One Expert, Three Jobs
+
+The **Lead VFX Compositor** persona appears in **THREE different prompts**, but with specialized focuses:
+
+#### **Job 1: Background Generation** (Scene Creator)
+
+**Specialized Persona**:
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic scene creation and lighting design. You specialize in creating environments 
+that are perfectly suited for seamless photo compositing.
+
+**Your Core Expertise:**
+- Photorealistic Scene Generation: Creating believable, high-fidelity environments
+- Lighting Design: Establishing clear, consistent light sources
+- Composition for Compositing: Designing scenes with appropriate depth and perspective
+- Color & Mood: Creating cohesive color palettes
+```
+
+**Focus**: Create compositing-friendly backgrounds with CLEAR lighting direction
+
+**Why Different**: This job is about SCENE CREATION, not integration. The AI needs to think like an environment designer.
+
+---
+
+#### **Job 2: Foreground Remix** (Identity-Preserving Modifier)
+
+**Specialized Persona**:
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic integration, light, and shadow. You specialize in seamlessly blending 
+real-world elements with artistic modifications while preserving core identity.
+
+**Your Core Expertise:**
+- Photorealistic Integration: Seamlessly blending modifications with original subject
+- Identity Preservation: Maintaining exact facial features and defining characteristics
+- Edge Blending: Creating natural transitions without harsh cutout edges
+- Light & Color Matching: Ensuring modifications match subject's existing lighting
+```
+
+**Focus**: Modify subject (add costume, props) while preserving identity and transparency
+
+**Why Different**: This job requires balancing ARTISTIC MODIFICATION with IDENTITY PRESERVATION. The persona emphasizes both.
+
+---
+
+#### **Job 3: Final Compositing** (Integration Specialist)
+
+**Specialized Persona**:
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic compositing, light, and shadow. You are the final step in creating seamless, 
+believable composite images where subjects look naturally present in their new environment.
+
+**Your Core Expertise:**
+- Photorealistic Integration: Making pre-segmented subjects look physically present
+- Light & Color Matching: Analyzing scene lighting and re-lighting subjects to match
+- Shadow Generation: Creating realistic shadows that anchor subjects
+- Edge Blending: Refining cutout edges to eliminate "pasted-on" appearance
+- Color Grading: Unifying the color palette across all elements
+```
+
+**Focus**: Seamless integration with lighting/shadow/color matching
+
+**Why Different**: This is the FINAL STEP. The persona emphasizes INTEGRATION and REALISM above all.
+
+---
+
+### How User Settings Modify the VFX Prompts
+
+#### **Blending Mode**
+
+**User Selects**: Realistic / Seamless / Dramatic / Subtle
+
+**Prompt Modification**:
+
+**Realistic** (Default):
+```
+**Blending Mode: Realistic**
+- Apply natural, photorealistic integration
+- Lighting and shadows should match scene authentically
+- Edge blending should be convincing but not overly perfect
+- Maintain realistic depth and presence
+```
+
+**Seamless**:
+```
+**Blending Mode: Seamless**
+- Create PERFECT invisible blending - eliminate ALL edge artifacts
+- Subject must look indistinguishably photographed in this scene
+- Maximum edge refinement and color matching
+- Zero "pasted-on" appearance - flawless integration
+```
+
+**Dramatic**:
+```
+**Blending Mode: Dramatic**
+- Apply high-contrast integration with ENHANCED shadows
+- Amplify lighting effects for cinematic impact
+- Strong shadow generation for depth
+- Bold, striking presence in scene
+```
+
+**Subtle**:
+```
+**Blending Mode: Subtle**
+- Soft, gentle integration with MINIMAL shadows
+- Subdued lighting matching
+- Light touch on edge blending
+- Natural, understated presence
+```
+
+---
+
+#### **Lighting Style**
+
+**User Selects**: Match Background / Enhanced / Dramatic / Soft
+
+**Prompt Modification**:
+
+**Match Background**:
+```
+**Lighting Style: Match Background**
+- ANALYZE background lighting direction, color, and intensity
+- Re-light subject to EXACTLY match scene lighting
+- Match color temperature (warm/cool) precisely
+- Generate shadows consistent with scene light sources
+```
+
+**Enhanced**:
+```
+**Lighting Style: Enhanced**
+- Match background lighting BUT with ENHANCED quality
+- Add subtle rim lighting for definition
+- Slightly elevated contrast and clarity
+- Professional editorial lighting quality
+```
+
+**Dramatic**:
+```
+**Lighting Style: Dramatic**
+- Apply DRAMATIC lighting inspired by scene but AMPLIFIED
+- Strong directional lighting with pronounced shadows
+- High contrast, cinematic quality
+- Bold, theatrical integration
+```
+
+**Soft**:
+```
+**Lighting Style: Soft**
+- Soft, DIFFUSED lighting matching scene atmosphere
+- Gentle shadows with soft edges
+- Subdued contrast, flattering quality
+- Natural, gentle integration
+```
+
+---
+
+#### **Character Position**
+
+**User Selects**: Center / Left / Right / Top / Bottom
+
+**Prompt Addition**:
+
+**Center**:
+```
+**Character Position: center**
+- Position subject(s) in CENTER of frame
+- Balanced composition with subject as focal point
+- Equal space on all sides
+```
+
+**Left**:
+```
+**Character Position: left**
+- Position subject(s) on LEFT side of frame
+- Leave RIGHT side open for scene elements
+- Balanced negative space composition
+```
+
+(Similar for Right, Top, Bottom)
+
+---
+
+#### **Character Size**
+
+**User Adjusts Slider**: 30% - 100%
+
+**Prompt Addition**:
+```
+**Character Size: 70% of scene height**
+- Scale subject to occupy approximately 70% of vertical frame
+- Maintain realistic proportions relative to scene perspective
+- Ensure subject prominence while respecting scene scale
+```
+
+---
+
 ### 1. Analysis & Suggestion Prompt
 
 **Purpose**: Analyzes your uploaded photo and generates 4 creative remix suggestions  

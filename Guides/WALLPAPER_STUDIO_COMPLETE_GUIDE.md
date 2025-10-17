@@ -3170,6 +3170,235 @@ Problem: Wallpaper looks bad
 
 This section reveals the actual prompts that AI Sticker Studio sends to the AI models for wallpaper generation. Understanding these prompts gives you insight into how Smart Context Adaptation and character integration work.
 
+### The Four Pillars Prompt Engineering Framework
+
+Wallpaper Studio follows the same "Four Pillars" framework, but adapted for wallpaper-specific needs:
+
+#### **Pillar 1: The Expert Persona - The Style Chameleon 🎨**
+
+For wallpapers, the AI takes on a different expert role:
+
+**Smart Context Persona**:
+```
+You are a Lead VFX Compositor from a world-class film studio, renowned for your mastery 
+of photorealistic integration, light, and shadow. You specialize in seamlessly blending 
+real-world elements with AI-generated environments.
+```
+
+**Legacy Mode Persona** (background-only):
+```
+You are a master digital artist and style chameleon, renowned for your ability to adapt 
+your technique to any artistic style demanded by a project. You are a world-class expert 
+in scene composition and atmospheric design.
+```
+
+**Key Skills**:
+- **Style Analysis & Adaptation**: Instantly analyze character's artistic style and adapt scene to match
+- **Smart Context Adaptation**: Master of matching lighting, shadows, color grading, perspective
+- **Creative Ideation**: Brainstorming diverse and compelling scene ideas
+- **Character Integration**: Making characters look naturally present in any environment
+
+**Why This Persona**: Unlike Photo Remix (always photorealistic VFX), wallpapers can be ANY style (anime, cartoon, painterly, photo). The "style chameleon" persona gives the AI flexibility to match character aesthetics.
+
+---
+
+#### **Pillar 2: Rich Context - The Mission 🗺️**
+
+**User Goal**:
+```
+The user wants to create a high-resolution wallpaper featuring their character(s)
+from the Character Library in a new scene.
+```
+
+**Source Data**:
+- Character images with Identity Anchors
+- Text prompt describing scene
+- Wallpaper size and aspect ratio
+- Composition settings (position, size, lighting)
+
+**Context Provided**:
+```
+**CHARACTERS TO INTEGRATE:**
+Character: [Name] ([Gender], [Age Group])
+
+**SCENE DESCRIPTION:**
+[User's prompt or expanded preset]
+
+**COMPOSITION SPECIFICATIONS:**
+- Wallpaper Size: [Size Name] ([Aspect Ratio])
+- Character Position, Size, Lighting Style, Blending Mode
+```
+
+---
+
+#### **Pillar 3: Unambiguous Constraints - The Guardrails 🚦**
+
+**Primary Directive** (Smart Context):
+```
+Your most important task is to create a cohesive final image where the character 
+and the background feel like they belong together. The blend must be realistic 
+within the context of the chosen art style.
+```
+
+**Critical Constraints**:
+- **Style Cohesion**: Background must match character's artistic style
+- **Lighting & Shadows**: Character lighting must match scene lighting
+- **Color Harmony**: Unified color palette across character + background
+- **Identity Preservation**: Character must remain recognizable
+
+**Why Different from Photo Remix**: Wallpapers aren't always photorealistic! A cartoon character in an anime cityscape is valid. The constraint is COHESION, not always photorealism.
+
+---
+
+#### **Pillar 4: Precise Output Formatting - The Blueprint 📐**
+
+**Output Specification**:
+```
+**OUTPUT:**
+Generate a single, high-resolution composite wallpaper image that seamlessly integrates 
+all provided character cutouts into the described scene.
+
+Technical Requirements:
+- Resolution: High-resolution suitable for the selected wallpaper size
+- Aspect Ratio: Exactly [16:9 / 9:16 / 21:9 / etc.]
+- Format: Final composite image
+- Quality: Professional-grade suitable for desktop/mobile wallpaper use
+```
+
+---
+
+### File Structure: Where Wallpaper Prompts Live
+
+**Location in Codebase**:
+
+```
+AI STICKER STUDIO - CORE MODEL/
+├── utils/
+│   └── services/
+│       └── geminiService.ts                    ← Wallpaper prompts here
+│           ├── generateWallpaper()             (Line ~223)
+│           │   └── Legacy mode wallpaper generation
+│           │
+│           ├── generateUnifiedWallpaperScene() (Line ~745)
+│           │   └── Smart Context unified generation
+│           │
+│           └── segmentImage()                  (Line ~543)
+│               └── Character segmentation (shared with Photo Remix)
+│
+├── hooks/
+│   └── useGeneration.ts                       ← Wallpaper orchestration
+│       ├── executeWallpaperGeneration()       (Line ~288)
+│       └── Smart Context logic                (Line ~313)
+│
+├── constants/
+│   └── wallpaperPresets.ts                    ← 25+ preset prompts
+│
+└── Prompt Engineering Playbook - Wallpaper.md ← Design guidelines
+```
+
+**Key Functions**:
+- **`generateWallpaper`** (line 223): Legacy mode generation
+- **`generateUnifiedWallpaperScene`** (line 745): Smart Context VFX generation
+- **`segmentImage`** (line 543): Character background removal
+- **`wallpaperPresets.ts`**: All 25+ preset descriptions
+
+**Smart Context Logic**: In `hooks/useGeneration.ts` (lines 313-378):
+1. Retrieves character images
+2. Segments each character
+3. Builds VFX Compositor prompt
+4. Calls unified generation
+5. Returns final composite
+
+---
+
+### How Wallpaper Settings Modify Prompts
+
+#### **Smart Context ON vs OFF**
+
+**Smart Context OFF**:
+- Uses simple text-to-image model (`imagen-4.0-generate-001`)
+- No VFX Compositor persona
+- Characters described in text only
+- No lighting/shadow integration
+- Fast but generic
+
+**Smart Context ON**:
+- Uses multimodal compositing model (`gemini-2.5-flash-image-preview`)
+- VFX Compositor persona activated
+- Actual character images provided
+- Full lighting/shadow/color integration
+- Slower but professional-grade
+
+---
+
+#### **Character Count (1 vs Multiple)**
+
+**1 Character**:
+```
+**CHARACTERS TO INTEGRATE:**
+Character: Alex (Male, Young Adult)
+```
+
+**Prompt Emphasis**:
+- Focus on single subject integration
+- Optimal positioning for one person
+- Dramatic lighting possible
+
+**3 Characters**:
+```
+**CHARACTERS TO INTEGRATE:**
+Character: Sarah (Female, Young Adult)
+Character: Mike (Male, Adult)
+Character: Emma (Female, Teenager)
+```
+
+**Prompt Addition**:
+```
+**Multiple Characters**: Ensure proper spacing, depth, and interaction between all three characters.
+Prevent awkward overlaps. Create realistic group positioning.
+```
+
+**What AI Does Differently**:
+- Staggers characters at different depths
+- Creates space between them
+- Generates individual shadows
+- Balances composition for group
+
+---
+
+#### **Quality Level**
+
+**User Selects**: Standard / High / Ultra
+
+**Prompt Modification**:
+
+**Standard**:
+```
+**Quality Level: Standard**
+- Good quality suitable for general wallpaper use
+- Balanced detail and generation speed
+```
+
+**High**:
+```
+**Quality Level: High**
+- Enhanced detail and clarity
+- Professional-grade quality
+- Higher resolution rendering
+```
+
+**Ultra**:
+```
+**Quality Level: Ultra**
+- MAXIMUM detail and quality
+- 4K-ready rendering
+- Professional portfolio-grade output
+```
+
+**Effect**: Doesn't change the prompt structure, but signals to the AI to prioritize quality over speed.
+
+---
+
 ### 1. Legacy Mode Wallpaper Generation
 
 **Purpose**: Generates wallpaper without character integration (background-only or simple overlay)  

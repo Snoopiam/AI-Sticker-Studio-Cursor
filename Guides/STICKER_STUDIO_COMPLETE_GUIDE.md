@@ -2484,6 +2484,427 @@ Congratulations! You now have complete mastery of the Sticker Studio. This guide
 
 This section reveals the actual prompts that AI Sticker Studio sends to the AI models. Understanding these prompts gives you insight into how Identity Lock and sticker generation work under the hood.
 
+### The Four Pillars Prompt Engineering Framework
+
+**Before diving into specific prompts**, understand the methodology behind them. Every prompt in AI Sticker Studio follows the "Four Pillars" framework from the official Prompt Engineering Playbook:
+
+#### **Pillar 1: The Expert Persona (Role & Authority) 🎭**
+
+The AI is assigned a detailed, expert role:
+- **Role**: Specific job title (e.g., "Forensic Facial Analyst", "Master Motion Graphics Artist")
+- **Specialization**: Area of expertise (e.g., "biometric profile creation", "looping animations")
+- **Accolades**: What it's known for (e.g., "work featured in blockbuster films")
+- **Key Skills**: Specific techniques (e.g., "seamless loop composition", "identity preservation")
+
+**Why This Works**: The AI performs better when given a specific role and expertise context.
+
+#### **Pillar 2: Rich Context (The Mission) 🗺️**
+
+The AI needs to understand the "why":
+- **Background**: User's goal explained
+- **Source Data**: All input data clearly labeled
+- **Definitions**: Project-specific terms defined (e.g., "Identity Lock")
+
+**Why This Works**: Context prevents ambiguity and helps the AI make informed decisions.
+
+#### **Pillar 3: Unambiguous Constraints (The Guardrails) 🚦**
+
+Non-negotiable rules for safety, consistency, correctness:
+- **Primary Directive**: Single most important goal that cannot be compromised
+- **Positive Constraints**: What the output MUST include
+- **Negative Constraints**: What the AI MUST NOT do
+
+**Why This Works**: Explicit constraints prevent common AI failures and ensure quality.
+
+#### **Pillar 4: Precise Output Formatting (The Blueprint) 📐**
+
+Never assume the AI will guess the format:
+- **Structure**: Exact format specified (JSON, image, video, etc.)
+- **Schema**: For JSON, provide clear schema or example
+- **Technical Specs**: Resolution, transparency, file type, etc.
+
+**Why This Works**: Eliminates ambiguity about the deliverable.
+
+---
+
+### File Structure: Where Prompts Are Defined
+
+**Location in Codebase**:
+
+```
+AI STICKER STUDIO - CORE MODEL/
+├── utils/
+│   └── services/
+│       ├── geminiService.ts           ← Main generation prompts
+│       │   ├── generateStaticStickers()  (Sticker V1 prompts)
+│       │   ├── generateAnimatedSticker() (Animation prompts)
+│       │   ├── generateBackground()      (Photo Remix backgrounds)
+│       │   ├── remixForeground()         (Photo Remix foreground)
+│       │   └── compositeImages()         (Photo Remix compositing)
+│       │
+│       └── identityPreservation.ts    ← Identity Lock V2 prompts
+│           ├── generateNeutralReference()
+│           ├── extractBiometricProfile()
+│           ├── createIdentityFingerprint()
+│           ├── generateWithIdentityLock() (Sticker V2 prompts)
+│           └── validateIdentity()
+│
+├── hooks/
+│   ├── useGeneration.ts               ← Orchestrates sticker generation
+│   ├── useRemix.ts                    ← Orchestrates Photo Remix
+│   └── useCalibration.ts              ← Orchestrates calibration
+│
+├── Prompt Engineering Playbook - Sticker & Animated Sticker.md
+├── Prompt Engineering Playbook - Photo Remix.md
+└── Prompt Engineering Playbook - Wallpaper.md
+```
+
+**Key Files**:
+- **`geminiService.ts`** (lines 55-221): All main generation functions
+- **`identityPreservation.ts`** (lines 36-301): Identity Lock V2 system
+- **Playbooks**: High-level prompt design guidelines
+
+---
+
+### How Artistic Styles Change the Prompt & Persona
+
+**THIS IS CRITICAL**: The expert persona and constraints ADAPT based on the artistic style selected!
+
+#### **Base Expert Persona** (All Styles):
+```
+You are a world-class digital illustrator specializing in clean, vibrant vector art for stickers.
+```
+
+**But this changes based on style...**
+
+---
+
+#### **Style 1: Cartoon Vector / Sticker Style**
+
+**Expert Persona**:
+```
+You are a world-class digital illustrator specializing in clean, vibrant vector art for stickers.
+Your expertise includes smooth gradients, bold outlines, and cel-shaded depth.
+```
+
+**Prompt Addition**:
+```
+**Artistic Style:**
+- Overall Style: Cartoon Vector
+- Color Palette: Vibrant (bold, saturated, punchy colors)
+- Line Style: Smooth (perfect, computer-precise lines)
+- Shading Style: Cel-shading (anime-style with 2-3 distinct color zones)
+
+**Style-Specific Requirements:**
+- Use clean vector shapes with smooth bezier curves
+- Apply cel-shading with hard edge transitions
+- Bold outlines should be consistent thickness throughout
+- Colors should be vibrant and high-contrast for visibility
+```
+
+**Temperature**: 0.7 (balanced)
+
+---
+
+#### **Style 2: Kawaii**
+
+**Expert Persona CHANGES**:
+```
+You are a master of Japanese kawaii character design, specializing in creating adorable,
+expressive characters with oversized features and soft, approachable aesthetics.
+Your signature is making characters irresistibly cute while maintaining personality.
+```
+
+**Prompt Addition**:
+```
+**Kawaii Style Requirements:**
+- Eyes: SIGNIFICANTLY larger than realistic proportions (占face 30-40%)
+- Nose: Minimized or simplified to tiny dot/line
+- Mouth: Small, simple, expressive
+- Cheeks: Add soft blush marks
+- Head: Slightly enlarged relative to body (1:6 or 1:5 ratio)
+- Expression: Amplify cuteness factor
+- Colors: Lean toward pastel if palette allows
+- Overall: "Cute" should be the dominant aesthetic
+
+**CRITICAL**: While making the character kawaii-style, you MUST still preserve
+their core identity features (eye color, face shape, hair, distinctive marks).
+```
+
+**Temperature**: 0.8 (more creative for cute variations)
+
+**Constraint Modification**: Identity preservation is relaxed slightly for artistic transformation, but core features remain.
+
+---
+
+#### **Style 3: Chibi**
+
+**Expert Persona CHANGES**:
+```
+You are a master of chibi/super-deformed character art, known for creating adorable
+miniature versions of characters with exaggerated proportions. Your specialty is the
+classic 1:2 or 1:3 head-to-body ratio that defines the chibi aesthetic.
+```
+
+**Prompt Addition**:
+```
+**Chibi Style Requirements:**
+- Head-to-Body Ratio: 1:2 or 1:3 (head is MASSIVE relative to body)
+- Limbs: Short, stubby, simplified
+- Hands/Feet: Simplified to mitt-like shapes
+- Features: Large eyes, small nose/mouth (similar to kawaii)
+- Pose: Adapt expression to chibi proportions
+- Cuteness: Maximum adorable factor
+
+**Composition Requirement**: If Half-Body or Full-Body is selected, the chibi
+proportions MUST be clearly visible. Headshot defeats the purpose of chibi style.
+
+**Identity Preservation**: Maintain hair style, eye color, distinctive features,
+but adapted to chibi's exaggerated proportions.
+```
+
+**Temperature**: 0.8 (creative for proportion adaptation)
+
+---
+
+#### **Style 4: Photorealistic**
+
+**Expert Persona CHANGES**:
+```
+You are a master CGI artist specializing in hyper-realistic human renders,
+with expertise in subsurface scattering, realistic skin textures, and
+photographic lighting. Your work is indistinguishable from high-end photography.
+```
+
+**Prompt Addition**:
+```
+**Photorealistic Requirements:**
+- Skin: Realistic texture with pores, subtle imperfections, subsurface scattering
+- Lighting: Photographic quality with realistic light falloff
+- Shading: Gradient (ONLY option - realistic depth is required)
+- Lines: None (photos don't have outlines)
+- Hair: Individual strands with realistic shine and texture
+- Eyes: Realistic iris detail, catch lights, proper depth
+- Clothing: Realistic fabric textures and wrinkles
+
+**Identity Preservation**: MAXIMUM strictness. Every facial feature must be
+photorealistically accurate to the Identity Lock data.
+```
+
+**Temperature**: 0.5 (more deterministic for realism)
+
+**Constraint Amplification**: Identity constraints are STRICTEST for this style.
+
+---
+
+#### **Style 5: 3D Render**
+
+**Expert Persona CHANGES**:
+```
+You are a master 3D character artist specializing in modern CGI rendering,
+with expertise in physically-based rendering (PBR), realistic lighting,
+and professional 3D character modeling. Your work appears in animated films.
+```
+
+**Prompt Addition**:
+```
+**3D Render Requirements:**
+- Geometry: Clean, professional 3D modeling topology
+- Lighting: Realistic 3-point lighting with proper shadows
+- Materials: PBR materials with proper specularity and roughness
+- Shading: Gradient (realistic depth from 3D lighting)
+- Lines: None (3D objects don't have outlines)
+- Depth: Strong sense of dimensionality
+- Quality: Film-quality CGI rendering
+
+**Style Balance**: Character should feel like a 3D model but still maintain
+recognizable features from Identity Lock.
+```
+
+**Temperature**: 0.6 (balanced for technical + artistic)
+
+---
+
+#### **Style 6: WPAP (Wedha's Pop Art Portrait)**
+
+**Expert Persona CHANGES**:
+```
+You are a master of WPAP (Wedha's Pop Art Portrait) style, specializing in
+geometric faceted portraits with bold, angular shapes and vibrant color blocking.
+You're skilled at deconstructing faces into geometric planes while maintaining
+recognizability.
+```
+
+**Prompt Addition**:
+```
+**WPAP Requirements:**
+- Geometry: Face deconstructed into angular, faceted shapes
+- Lines: Bold (thick, geometric borders between color blocks)
+- Shading: Flat (NO gradients - solid color blocks only)
+- Colors: High contrast, vibrant color blocking
+- Angles: Sharp, geometric, no curves
+- Complexity: Multiple color zones creating depth through color variation
+
+**Identity Challenge**: This is one of the HARDEST styles for identity preservation.
+The geometric deconstruction must still maintain recognizable features:
+- Face shape overall
+- Eye placement and general shape
+- Hair silhouette
+- Distinctive markers (if possible to represent geometrically)
+
+**Difficulty Warning**: WPAP may require multiple retries in V2 validation.
+```
+
+**Temperature**: 0.9 (highly creative for geometric interpretation)
+
+**Constraint Relaxation**: Identity validation scoring is more lenient (70+ instead of 85+).
+
+---
+
+#### **Style 7: Lineart**
+
+**Expert Persona CHANGES**:
+```
+You are a master line artist specializing in clean, expressive line drawings.
+Your expertise is creating elegant illustrations with line weight variation
+and minimal or no fill colors. Your work has a timeless, sketch-like quality.
+```
+
+**Prompt Addition**:
+```
+**Lineart Requirements:**
+- Primary Element: Clean, confident linework
+- Lines: Can be Thin, Bold, Hand-drawn, or Smooth
+- Shading: None (lineart doesn't use shading - depth comes from line weight)
+- Fill: Minimal or none (focus is on the lines)
+- Style: Clean, professional line quality
+- Expression: Conveyed through line work and gesture
+
+**Technical**: Output should feel like a professional sketch or line drawing.
+```
+
+**Temperature**: 0.7
+
+---
+
+#### **Style 8: Watercolor**
+
+**Expert Persona CHANGES**:
+```
+You are a master watercolor artist specializing in digital watercolor techniques.
+Your signature is soft, flowing edges, color bleeding, and the organic,
+spontaneous quality of traditional watercolor painting.
+```
+
+**Prompt Addition**:
+```
+**Watercolor Requirements:**
+- Edges: Soft, flowing, with intentional color bleeding
+- Colors: Translucent, layered washes
+- Lines: Thin, Hand-drawn, or None (soft sketch lines if present)
+- Shading: Gradient or None (organic color variation)
+- Texture: Visible watercolor paper texture
+- Spontaneity: Organic, natural, not overly precise
+
+**Artistic Freedom**: Watercolor allows for more artistic interpretation while
+maintaining identity. Some softness to features is acceptable.
+```
+
+**Temperature**: 0.8 (creative for watercolor effects)
+
+---
+
+#### **Style 9: Oil Painting**
+
+**Expert Persona CHANGES**:
+```
+You are a master oil painter in the tradition of classical portraiture,
+with expertise in visible brush strokes, rich color layering, and the
+textural quality of oil on canvas. Your work evokes old masters.
+```
+
+**Prompt Addition**:
+```
+**Oil Painting Requirements:**
+- Brush Strokes: Visible, textured, with directionality
+- Colors: Rich, deep, layered
+- Lines: None, Smooth, Hand-drawn, or Bold (painterly strokes)
+- Shading: Gradient (realistic depth from lighting)
+- Texture: Canvas texture visible
+- Quality: Fine art, museum-quality aesthetic
+
+**Identity in Art**: Features should be recognizable but rendered in
+classical oil painting style with artistic interpretation.
+```
+
+**Temperature**: 0.7
+
+---
+
+#### **Style 10: Pencil Sketch**
+
+**Expert Persona CHANGES**:
+```
+You are a master sketch artist specializing in expressive pencil drawings.
+Your expertise is creating gestural, organic sketches with varied pencil
+pressure, cross-hatching, and the raw, artistic quality of hand-drawn work.
+```
+
+**Prompt Addition**:
+```
+**Pencil Sketch Requirements:**
+- Medium: Pencil/graphite aesthetic
+- Lines: Hand-drawn or Thin (sketchy, organic quality)
+- Shading: None (depth created through cross-hatching and pencil pressure)
+- Texture: Paper grain visible
+- Quality: Artistic sketch, not overly refined
+- Style: Gestural, with visible construction lines acceptable
+
+**Artistic Nature**: Sketch style allows for more organic interpretation.
+```
+
+**Temperature**: 0.8
+
+---
+
+### How Style Affects Identity Lock Validation
+
+**Identity Validation Scoring** (Identity Lock V2):
+
+| Style | Validation Threshold | Reasoning |
+|-------|---------------------|-----------|
+| **Photorealistic** | 90+ | Must be nearly perfect |
+| **3D Render** | 85+ | Standard threshold |
+| **Cartoon Vector** | 85+ | Standard threshold |
+| **Kawaii** | 80+ | Stylization acceptable |
+| **Chibi** | 80+ | Proportion changes expected |
+| **Oil Painting** | 80+ | Artistic interpretation |
+| **Watercolor** | 75+ | Soft edges acceptable |
+| **WPAP** | 70+ | Geometric deconstruction difficult |
+| **Lineart** | 75+ | Minimal detail is normal |
+| **Pencil Sketch** | 75+ | Sketch quality expected |
+
+**Validation Prompt Adapts**:
+
+For WPAP:
+```
+SCORING (ADJUSTED FOR WPAP):
+85-100: Strong geometric interpretation maintaining features
+70-84: Recognizable despite geometric deconstruction
+<70: Too abstract, identity lost
+```
+
+For Photorealistic:
+```
+SCORING (STRICT FOR PHOTOREALISM):
+95-100: Perfect photographic match
+90-94: Minor artistic liberties
+85-89: Noticeable but acceptable differences
+<85: Identity not preserved adequately
+```
+
+---
+
 ### 1. Identity Lock V2 Prompts
 
 #### 1.1 Neutral Reference Generation Prompt
