@@ -4533,6 +4533,297 @@ Return your answer as a valid JSON array of these objects.
 
 ---
 
+## APPENDIX: DECISION FLOWCHARTS & OPTIMIZATION
+
+### Flowchart 1: Simple vs Advanced Mode Decision
+
+```
+What's your experience level?
+├─ BEGINNER (first few remixes)
+│  └─ Use Simple Mode
+│     └─ One-click → Professional results
+│
+├─ INTERMEDIATE (understand basics)
+│  ├─ Single person? → Simple Mode (faster)
+│  └─ Group photo? → Advanced Mode (control each person)
+│
+├─ ADVANCED (want full control)
+│  └─ Always use Advanced Mode
+│     └─ Iterate on individual steps
+│
+└─ TROUBLESHOOTING (something looks wrong)
+    └─ Switch to Advanced Mode
+       └─ Regenerate problem step only
+```
+
+---
+
+### Flowchart 2: Should You Use Foreground Prompt?
+
+```
+Do you want to modify how subjects LOOK?
+├─ NO (just change location/scene)
+│  └─ Leave foreground prompt BLANK
+│     ├─ Saves 5 credits per person!
+│     ├─ Faster generation
+│     └─ Preserves your natural appearance
+│
+└─ YES (add costume, props, style changes)
+   └─ Write foreground prompt
+      ├─ Examples:
+      │  ├─ "Add superhero cape and mask"
+      │  ├─ "Transform into astronaut with spacesuit"
+      │  └─ "Add wizard robes and magical staff"
+      │
+      └─ Costs 5 credits per person
+         └─ But adds creative transformation!
+```
+
+**Golden Rule**: 95% of great remixes use blank foreground prompts! Only add it for specific costume/prop needs.
+
+---
+
+### Flowchart 3: Credit Cost Calculator
+
+```
+How many people in your photo?
+├─ 1 PERSON
+│  ├─ Blank foreground? → 10 credits (5 bg + 0 fg + 5 comp)
+│  └─ With foreground? → 15 credits (5 bg + 5 fg + 5 comp)
+│
+├─ 2 PEOPLE
+│  ├─ Blank foreground? → 10 credits (5 bg + 0 fg + 5 comp)
+│  └─ With foreground? → 20 credits (5 bg + 5×2 fg + 5 comp)
+│
+└─ 3 PEOPLE
+   ├─ Blank foreground? → 10 credits (5 bg + 0 fg + 5 comp)
+   └─ With foreground? → 25 credits (5 bg + 5×3 fg + 5 comp)
+
+INSIGHT: Blank foreground costs the SAME regardless of person count!
+But foreground prompt MULTIPLIES by number of people.
+```
+
+---
+
+### Flowchart 4: Troubleshooting Decision Tree
+
+```
+What's wrong with your remix?
+├─ Subject looks "pasted on"
+│  ├─ Try: Regenerate with "Seamless" blending mode
+│  ├─ Try: Use "Enhanced" lighting style
+│  └─ Check: Is background scene too complex?
+│
+├─ Colors don't match (subject warmer/cooler than scene)
+│  ├─ Try: Regenerate composite step only (Advanced mode)
+│  ├─ Check: Does background have strong color cast?
+│  └─ Fix: Regenerate background with color palette description
+│
+├─ Lighting doesn't match
+│  ├─ Check: Does background have CLEAR light sources?
+│  ├─ Fix: Regenerate background with specific lighting ("strong sunlight from right")
+│  └─ Try: Use "Dramatic" lighting style for emphasis
+│
+├─ Subject too small/large
+│  ├─ Fix: Adjust Character Size slider (30-100%)
+│  └─ Regenerate composite step
+│
+├─ Subject in wrong position
+│  ├─ Fix: Change Character Position (left/right/center/etc.)
+│  └─ Regenerate composite step
+│
+├─ Shadows look wrong
+│  ├─ Check: Background lighting direction clear?
+│  ├─ Try: Use "Dramatic" blending mode for stronger shadows
+│  └─ Fix: Regenerate background with clear light source description
+│
+└─ Subject identity changed
+    ├─ Check: Did foreground prompt ask for face modifications?
+    └─ Fix: Remove face-related instructions from foreground prompt
+```
+
+---
+
+### Flowchart 5: Background Prompt Optimization
+
+```
+Writing a background prompt?
+├─ INCLUDE:
+│  ├─ Specific location ("Victorian library", "Mars surface")
+│  ├─ Lighting details ("golden hour", "neon lights", "overcast")
+│  ├─ Atmospheric effects ("foggy", "rain", "sun rays")
+│  ├─ Mood/style ("cinematic", "dreamlike", "gritty")
+│  ├─ Perspective ("ground-level view", "from rooftop")
+│  └─ Color palette ("warm golden tones", "cool blue atmosphere")
+│
+└─ AVOID:
+   ├─ References to people ("with a person", "someone standing")
+   ├─ Vague descriptions ("nice place", "cool scene")
+   ├─ Multiple disconnected ideas ("forest AND city AND space")
+   ├─ Face/identity instructions (that's for foreground!)
+   └─ Overly technical jargon ("f/1.4, 85mm, ISO 100")
+```
+
+**Example Good Prompt**:
+```
+"A dramatic ancient Egyptian temple interior with massive stone columns, golden sunlight 
+streaming through high windows creating strong directional light and shadows on the stone 
+floor, atmospheric dust particles visible in the light beams, warm amber color palette, 
+photorealistic architectural detail"
+```
+
+**Example Bad Prompt**:
+```
+"A temple with someone standing there, nice lighting"
+```
+
+---
+
+### Flowchart 6: Foreground Prompt Optimization (When Used)
+
+```
+Writing a foreground modification prompt?
+├─ INCLUDE:
+│  ├─ Costume changes ("wearing astronaut suit", "royal robes")
+│  ├─ Props ("holding lightsaber", "with magic wand")
+│  ├─ Style transformations ("in anime style", "as comic character")
+│  ├─ Pose modifications ("heroic stance", "jumping mid-air")
+│  └─ Accessories ("with cape", "wearing crown")
+│
+└─ AVOID:
+   ├─ Face changes ("change eyes to blue", "different nose")
+   ├─ Identity modifications ("make them look like X celebrity")
+   ├─ Background references ("standing in forest") → That's background prompt!
+   ├─ Vague requests ("make them cooler") → Be specific!
+   └─ Breaking transparency ("remove background") → AI maintains transparency automatically!
+```
+
+**Example Good Prompt**:
+```
+"Transform into medieval knight with full plate armor, red cape flowing, holding ornate 
+longsword, heroic confident expression"
+```
+
+**Example Bad Prompt**:
+```
+"Make them look medieval and cooler with different hair"
+```
+
+---
+
+## APPENDIX: CREDIT OPTIMIZATION STRATEGIES
+
+### Strategy 1: The "Blank Foreground" Meta
+
+**For most users, this is the optimal approach:**
+
+```
+Background Prompt: [Detailed scene]
+Foreground Prompt: [LEAVE BLANK]
+
+Benefits:
+✅ Saves 5 credits per person
+✅ Faster generation (one less step)
+✅ Preserves your natural appearance
+✅ VFX Compositor handles all lighting/color automatically
+
+When to use:
+- Pure location changes
+- 90%+ of casual users
+- Group photos (savings multiply!)
+- Testing different backgrounds
+```
+
+**Example**: You in Paris → You on Mars → You in medieval castle
+**Cost**: 10 credits each (not 15!)
+
+---
+
+### Strategy 2: The "Group Photo Savings"
+
+**Group photos + blank foreground = MASSIVE savings:**
+
+```
+2 people + blank foreground:
+- Background: 5 credits
+- Foreground: 0 credits (×2 people = 0 credits)
+- Composite: 5 credits
+TOTAL: 10 credits
+
+2 people + with foreground:
+- Background: 5 credits
+- Foreground: 5 credits (×2 people = 10 credits)
+- Composite: 5 credits
+TOTAL: 20 credits
+
+SAVINGS: 10 credits (50% cheaper!)
+```
+
+**Pro Strategy**: For group photos, only add foreground prompts if you REALLY need costumes!
+
+---
+
+### Strategy 3: The "Background Library"
+
+**Build a library of successful backgrounds:**
+
+1. Generate amazing background (5 credits)
+2. Use Advanced Mode to access generated background
+3. Save background image locally
+4. Reuse it with different subjects later!
+
+**Currently Not Supported**: But keep wishlist for future feature!
+
+---
+
+### Strategy 4: The "AI Suggestion Mining"
+
+**AI suggestions are FREE:**
+
+```
+Upload photo → Get 4 suggestions automatically (0 credits)
+↓
+Copy the backgroundPrompt text from suggestions you like
+↓
+Paste into your custom prompt
+↓
+Modify to your preferences
+↓
+Generate!
+
+Cost: 0 credits for creative ideation!
+```
+
+**Why This Works**: The suggestions include professionally written background prompts with lighting, atmosphere, and mood details!
+
+---
+
+### Strategy 5: The "Iteration Strategy"
+
+**For perfect results with minimal waste:**
+
+```
+Step 1: Generate with Simple Mode (10-15 credits)
+↓
+Result looks good? → DONE! Save it.
+↓
+Something needs fixing?
+↓
+Step 2: Switch to Advanced Mode
+↓
+Identify which step failed (background/foreground/composite)
+↓
+Step 3: Regenerate ONLY that step (5 credits)
+↓
+Perfect!
+
+Total Cost: 15-20 credits (vs 30 credits if you regenerated entire remix)
+```
+
+**Key**: Advanced Mode lets you iterate on individual steps without re-doing the whole workflow!
+
+---
+
 **END OF PHOTO REMIX COMPLETE GUIDE**
 
 For questions, issues, or feedback about the photo remix feature, please refer to the project documentation or submit an issue on the repository.

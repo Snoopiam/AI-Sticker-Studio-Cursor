@@ -4239,6 +4239,448 @@ Generate a single, high-resolution composite wallpaper image that seamlessly int
 
 ---
 
+## APPENDIX E: COMPLETE WALLPAPER PRESETS LIBRARY (All 25+ Presets with Exact Prompts)
+
+This appendix shows the **EXACT PROMPTS** for every preset in Wallpaper Studio. These are the actual descriptions sent to the AI.
+
+**Source**: `constants/wallpaperPresets.ts` (lines 89-146)
+
+---
+
+### SCI-FI (2 Presets)
+
+#### **Cyberpunk Neon City**
+```
+A sprawling cyberpunk metropolis at night, towering skyscrapers covered in holographic 
+billboards and neon signs in pink, blue, and purple. Flying cars streak through the air 
+between buildings. Rain-slicked streets reflect the colorful lights. Detailed, cinematic, 
+moody atmosphere.
+```
+- **Mood**: Futuristic
+- **Intensity**: Dramatic
+- **Best Character Types**: Modern, urban, tech-themed
+
+#### **Deep Space Station**
+```
+Inside a massive orbital space station with floor-to-ceiling windows showing Earth in the 
+background. Zero-gravity environment with floating objects. Sleek metallic surfaces, 
+holographic displays, and soft blue interior lighting. Futuristic, realistic, awe-inspiring.
+```
+- **Mood**: Awe-inspiring
+- **Intensity**: Serene
+- **Best Character Types**: Sci-fi, astronaut, futuristic
+
+---
+
+### GODS & DEITIES (3 Presets)
+
+#### **Lord Shiva - Cosmic Dance**
+```
+Lord Shiva in his cosmic Nataraja form, dancing within a ring of cosmic fire, multiple 
+arms in perfect mudras, third eye glowing with divine light, sacred Ganga flowing from 
+his hair, Himalayan mountain backdrop, ultra HD cinematic lighting, divine aura, blue 
+skin with ash markings.
+```
+- **Mood**: Divine
+- **Intensity**: Dramatic
+- **HD Optimized**: Fold 7, Galaxy Book, 4K
+- **Cultural**: Hindu deity
+
+#### **Lord Hanuman - Divine Strength**
+```
+Lord Hanuman in a powerful flying pose carrying the Sanjeevani mountain, muscular divine 
+form, orange/red glowing skin, flowing hair, mace (gada) in hand, epic sunset sky with 
+clouds, devotional expression, ultra HD rendering, divine energy emanating.
+```
+- **Mood**: Powerful
+- **Intensity**: Dramatic
+- **Cultural**: Hindu deity
+
+#### **Lord Vishnu - Cosmic Protector**
+```
+Lord Vishnu resting on the cosmic serpent Shesha in the ocean of milk (Kshira Sagara), 
+four arms holding conch shell (Panchajanya), discus (Sudarshana Chakra), mace (Kaumodaki) 
+and lotus flower (Padma), magnificent crown and jewelry, serene blue skin, peaceful 
+expression, cosmic background with stars and nebulae, ultra HD divine artwork.
+```
+- **Mood**: Serene
+- **Intensity**: Dramatic
+- **Cultural**: Hindu deity
+
+---
+
+### MYTHOLOGY (2 Presets)
+
+#### **Bhagavad Gita Teachings**
+```
+Lord Krishna counseling Arjuna on the battlefield of Kurukshetra, a divine discourse 
+moment from the Bhagavad Gita, glowing Krishna with a peacock feather in his crown, 
+Arjuna listening intently, magnificent war chariots in the background, golden divine 
+light, capturing the profound teaching moment, ultra HD cinematic.
+```
+- **Lesson**: Dharma and Duty
+- **Mood**: Profound
+- **Intensity**: Spiritual
+- **Cultural**: Hindu scripture
+
+#### **Devotion of Hanuman**
+```
+Hanuman tearing open his chest to reveal Lord Ram and Sita residing in his heart, the 
+ultimate depiction of devotion (Bhakti), glowing divine light emanating from within, a 
+mountain forest background, an emotional expression of pure love and unwavering devotion, 
+ultra HD spiritual art.
+```
+- **Lesson**: Pure Devotion
+- **Mood**: Devotional
+- **Intensity**: Emotional
+- **Cultural**: Hindu mythology
+
+---
+
+### DC HEROES (3 Presets)
+
+#### **Batman - Gotham Guardian**
+```
+The Dark Knight Batman overlooking Gotham City at night from a high gargoyle, his cape 
+flowing in the wind, sprawling city lights below, the Bat-signal illuminating the cloudy 
+sky, noir cinematography, ultra HD dramatic lighting, iconic and brooding pose.
+```
+- **Character**: Batman
+- **Mood**: Brooding
+- **Intensity**: Dramatic
+- **Franchise**: DC Comics
+
+#### **Wonder Woman - Themyscira**
+```
+Wonder Woman on the paradise island of Themyscira, surrounded by Greco-Roman architecture, 
+waterfalls, and lush greenery. She stands in a powerful warrior princess pose with her 
+golden Lasso of Truth and shield. A Mediterranean sunset paints the sky. Ultra HD fantasy 
+landscape.
+```
+- **Character**: Wonder Woman
+- **Mood**: Powerful
+- **Intensity**: Majestic
+- **Franchise**: DC Comics
+
+---
+
+### MARVEL HEROES (1 Preset)
+
+#### **Spider-Man - NYC Swing**
+```
+Spider-Man swinging through the skyscrapers of New York City at sunset, web-slinging 
+action in a dynamic pose, city lights and traffic visible far below, iconic red and blue 
+suit, ultra HD action cinematography capturing the thrill of movement.
+```
+- **Character**: Spider-Man
+- **Mood**: Energetic
+- **Intensity**: Action
+- **Franchise**: Marvel Comics
+
+---
+
+### CARS (4 Presets - Nissan Z Focus)
+
+#### **Nissan 370Z - Mountain King**
+```
+A stunning Nissan 370Z in iconic Bayside Blue metallic finish, positioned on a dramatic 
+mountain switchback road during the golden hour. The lighting reflects beautifully off 
+the glossy paint, highlighting the aggressive Z33 body lines. Sport wheels, mountain peaks 
+in the background. Cinematic automotive photography, ultra HD for Fold 7.
+```
+- **Mood**: Adventurous
+- **Intensity**: Cinematic
+- **HD Optimized**: Fold 7 Unfolded, Galaxy Book 16"
+- **Theme**: JDM, mountain driving
+
+#### **Nissan 370Z - Cyber Dynasty**
+```
+A Bayside Blue Nissan 370Z in a futuristic cyberpunk city at night. Neon lights and 
+holographic advertisements reflect on the car's metallic paint and the rain-slicked 
+streets. A Tokyo-inspired, Blade Runner aesthetic. Ultra HD for premium screens.
+```
+- **Mood**: Futuristic
+- **Intensity**: Dramatic
+- **HD Optimized**: Fold 7 Cover, 4K Desktop
+- **Theme**: Cyberpunk, JDM
+
+#### **Nissan Z: Track Beast**
+```
+A Bayside Blue metallic Nissan Z Performance at the apex of a turn on a professional 
+racing circuit. The bright daylight highlights the car's aerodynamic features. The 
+background shows the blur of the track, tire barriers, and spectator stands. Focus is 
+on the car, conveying a sense of speed and precision. Clean, sharp, high-action motorsport 
+photography.
+```
+- **Mood**: Intense
+- **Intensity**: Action
+- **Theme**: Racing, motorsport
+
+#### **Nissan Z: Showroom King**
+```
+A pristine Bayside Blue metallic Nissan Z Performance parked in a futuristic, minimalist 
+showroom garage. The environment features dramatic overhead spotlights and polished concrete 
+floors that reflect the car's perfect blue paint. The lighting is designed to accentuate 
+every curve and detail of the Z's design. A sense of luxury and high-performance technology.
+```
+- **Mood**: Sleek
+- **Intensity**: Luxurious
+- **Theme**: Showroom, luxury
+
+---
+
+### NATURE (5 Presets)
+
+#### **Bioluminescent Forest**
+```
+A magical forest at night where plants and mushrooms glow with bioluminescent blue and 
+green light. Mist flowing between trees, fireflies dancing in the air. Mystical, enchanting, 
+otherworldly atmosphere.
+```
+- **Mood**: Mystical
+- **Intensity**: Enchanting
+
+#### **Aurora Sky**
+```
+Northern lights (aurora borealis) dancing across a star-filled sky in vibrant green, 
+purple, and blue. Snow-covered landscape below with silhouetted pine trees. Cold, majestic, 
+breathtaking natural phenomenon.
+```
+- **Mood**: Majestic
+- **Intensity**: Breathtaking
+
+#### **Mystical Forest**
+```
+A mystical, ancient forest with massive, moss-covered trees. Ethereal sunbeams pierce 
+through the dense canopy, illuminating particles of dust and pollen in the air. A sense 
+of magic and tranquility.
+```
+- **Mood**: Mystical
+- **Intensity**: Serene
+
+#### **Mountain Peak**
+```
+The summit of a majestic, snow-capped mountain range at sunrise. The sky is a brilliant 
+gradient of orange, pink, and purple. A sea of clouds fills the valleys below. Breathtaking, 
+epic, and vast.
+```
+- **Mood**: Epic
+- **Intensity**: Majestic
+
+#### **Aurora Borealis**
+```
+A breathtaking view of the aurora borealis over a frozen, snow-covered landscape with 
+pine trees. The sky is alive with swirling curtains of green, purple, and blue light. 
+A magical, cold, and clear night.
+```
+- **Mood**: Magical
+- **Intensity**: Vibrant
+
+---
+
+### SPACE (2 Presets)
+
+#### **Galaxy Dreams**
+```
+Floating in deep space, surrounded by a vibrant, swirling nebula of turquoise, magenta, 
+and gold. Countless stars and distant galaxies are visible in the background. Awe-inspiring 
+and cosmic.
+```
+- **Mood**: Cosmic
+- **Intensity**: Awe-inspiring
+
+#### **Alien Planet**
+```
+A bizarre and beautiful alien planet landscape. Two suns hang in the sky over a terrain 
+of crystal formations and bioluminescent flora. The colors are otherworldly and fantastical.
+```
+- **Mood**: Alien
+- **Intensity**: Fantastical
+
+---
+
+### FANTASY (2 Presets)
+
+#### **Floating Castle**
+```
+A magnificent, grand magic castle with towering spires, floating on a cloud island in 
+the sky. Waterfalls cascade from the edges of the island into the sky below. A whimsical 
+and epic fantasy setting.
+```
+- **Mood**: Whimsical
+- **Intensity**: Epic
+
+#### **Dragon's Lair**
+```
+A colossal, cavernous dragon's lair, filled with mountains of shimmering gold coins, 
+jewels, and ancient artifacts. A faint glow emanates from molten rock in the cavern walls. 
+Epic, dangerous, and awe-inspiring.
+```
+- **Mood**: Dangerous
+- **Intensity**: Epic
+
+---
+
+### URBAN (2 Presets)
+
+#### **Cyberpunk Cityscape**
+```
+A dense, futuristic cyberpunk cityscape at night. Towering skyscrapers are covered in 
+holographic advertisements and neon signs, reflected in the rain-slicked streets below. 
+Flying vehicles zip between buildings.
+```
+- **Mood**: Futuristic
+- **Intensity**: Energetic
+
+#### **Tokyo Crossing**
+```
+A bustling, iconic street crossing in Tokyo at night, like Shibuya. The scene is a blur 
+of motion, with crowds of people and vibrant neon signs in Japanese. A sense of high 
+energy and modern city life.
+```
+- **Mood**: Energetic
+- **Intensity**: Bustling
+
+---
+
+### ABSTRACT (4 Presets)
+
+#### **Geometric Dreamscape**
+```
+An abstract scene of floating geometric shapes (cubes, spheres, pyramids) in a pastel 
+gradient space. Soft pink, lavender, and mint green colors. Dreamy atmosphere with subtle 
+light rays. Minimalist, modern, ethereal.
+```
+- **Mood**: Dreamlike
+- **Intensity**: Minimalist
+
+#### **Liquid Metal Flow**
+```
+Abstract liquid metal flowing and morphing in space. Chrome and silver reflections with 
+iridescent rainbow highlights. Smooth, fluid motion captured in a still moment. High 
+contrast, reflective, dynamic composition.
+```
+- **Mood**: Dynamic
+- **Intensity**: High-contrast
+
+#### **Geometric Dreams**
+```
+A complex and beautiful landscape made of interlocking, semi-translucent geometric shapes. 
+The color palette is a soothing blend of pastel colors, and the lighting is soft and 
+ethereal. A modern, minimalist, and dreamlike aesthetic.
+```
+- **Mood**: Dreamlike
+- **Intensity**: Minimalist
+
+#### **Synthwave Grid**
+```
+A classic 80s synthwave scene. A glowing neon grid landscape stretches to the horizon, 
+where a wireframe mountain range meets a retro setting sun. The sky is a dark purple 
+filled with stars.
+```
+- **Mood**: Retro
+- **Intensity**: Vibrant
+- **Aesthetic**: 80s vaporwave
+
+---
+
+### VINTAGE (2 Presets)
+
+#### **1920s Art Deco**
+```
+An elegant Art Deco ballroom from the 1920s with geometric patterns in gold and black. 
+Ornate chandeliers, marble columns, and symmetrical designs. Luxurious, glamorous, vintage 
+aesthetic with warm golden lighting.
+```
+- **Mood**: Luxurious
+- **Intensity**: Glamorous
+- **Era**: 1920s
+
+#### **Retro 80s Arcade**
+```
+A classic 1980s arcade filled with neon-lit game cabinets. Pink and cyan grid floors, 
+palm tree silhouettes, chrome accents. Vaporwave aesthetic with VHS grain effect. 
+Nostalgic, vibrant, retro-futuristic.
+```
+- **Mood**: Nostalgic
+- **Intensity**: Vibrant
+- **Era**: 1980s
+
+---
+
+### SEASONAL (2 Presets)
+
+#### **Winter Wonderland**
+```
+A peaceful, snow-covered forest after a fresh snowfall. The branches of the trees are 
+heavy with snow, and the world is quiet and serene. A cozy cabin with a glowing window 
+is visible in the distance.
+```
+- **Mood**: Peaceful
+- **Intensity**: Serene
+- **Season**: Winter
+
+#### **Autumn Forest**
+```
+A vibrant autumn forest with a path covered in fallen leaves of red, orange, and yellow. 
+The afternoon sun filters through the colorful canopy, creating a warm and golden glow.
+```
+- **Mood**: Warm
+- **Intensity**: Vibrant
+- **Season**: Autumn
+
+---
+
+### Preset Selection Guide
+
+| Use Case | Recommended Presets | Why |
+|----------|-------------------|-----|
+| **Desktop Wallpaper (Productivity)** | Winter Wonderland, Mountain Peak, Mystical Forest | Calm, non-distracting |
+| **Desktop Wallpaper (Dramatic)** | Cyberpunk Neon City, Deep Space Station, Dragon's Lair | Bold, inspiring |
+| **Phone Wallpaper (Portrait)** | Bioluminescent Forest, Aurora Sky, Geometric Dreams | Work well in 9:16 |
+| **Spiritual/Religious** | Lord Shiva, Lord Vishnu, Bhagavad Gita, Hanuman Devotion | Hindu themes |
+| **Fan Art (Superheroes)** | Batman, Spider-Man, Wonder Woman | Character-specific |
+| **Car Enthusiasts** | All 4 Nissan Z presets | JDM, automotive |
+| **Retro/Nostalgic** | 80s Arcade, Art Deco, Synthwave Grid | Vintage vibes |
+| **Abstract/Modern** | Geometric Dreamscape, Liquid Metal, Synthwave | Minimalist, artistic |
+
+---
+
+### How to Modify Presets
+
+**Strategy 1: Add Details**
+```
+Original: "Cyberpunk Neon City"
+Enhanced: "Cyberpunk Neon City + Add heavy rain with neon reflections on puddles and 
+          volumetric fog between buildings"
+```
+
+**Strategy 2: Change Time of Day**
+```
+Original: "Mountain Peak" (sunrise)
+Modified: "Mountain Peak at night with Milky Way galaxy visible overhead and distant 
+          city lights in valley"
+```
+
+**Strategy 3: Add Atmosphere**
+```
+Original: "Floating Castle"
+Enhanced: "Floating Castle during a dramatic thunderstorm with lightning illuminating 
+          the castle from behind"
+```
+
+**Strategy 4: Combine Themes**
+```
+Preset 1: "Aurora Borealis"
+Preset 2: "Mystical Forest"
+Combined: "Mystical ancient forest with aurora borealis visible through the canopy and 
+          bioluminescent mushrooms on the forest floor"
+```
+
+**Pro Tip**: Presets are starting points! Feel free to edit and enhance them for your specific vision.
+
+---
+
 **END OF WALLPAPER STUDIO COMPLETE GUIDE**
 
 For questions, issues, or feedback about the wallpaper feature, please refer to the project documentation or submit an issue on the repository.

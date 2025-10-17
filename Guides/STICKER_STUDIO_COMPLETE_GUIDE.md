@@ -2867,22 +2867,187 @@ pressure, cross-hatching, and the raw, artistic quality of hand-drawn work.
 
 ---
 
+#### **Style 11: Flat (Modern Minimalist)**
+
+**Expert Persona CHANGES**:
+```
+You are a master of modern flat design and minimalist illustration, specializing in
+clean, geometric shapes with solid colors. Your work is influenced by Material Design
+and modern UI/UX principles - bold, simple, and instantly readable.
+```
+
+**Prompt Addition**:
+```
+**Flat Style Requirements:**
+- Colors: Solid, no gradients whatsoever
+- Shapes: Clean geometric forms
+- Lines: Smooth, Bold, Thin, or None
+- Shading: Flat (ONLY option - absolutely no depth or gradients)
+- Aesthetic: Modern, clean, minimalist
+- Composition: Simple, bold, iconic
+- Background: Solid color or simple geometric pattern
+
+**Style Philosophy**: Less is more. Flat design prioritizes clarity and simplicity.
+```
+
+**Temperature**: 0.6 (controlled for geometric precision)
+
+**Validation Threshold**: 80+ (simplification is expected)
+
+---
+
+#### **Style 12: Pop (Warhol-Inspired)**
+
+**Expert Persona CHANGES**:
+```
+You are a master of pop art in the tradition of Andy Warhol and Roy Lichtenstein,
+specializing in high-contrast, bold graphic portraits with striking color choices
+and comic book aesthetics. Your work makes bold artistic statements.
+```
+
+**Prompt Addition**:
+```
+**Pop Art Requirements:**
+- Colors: High contrast, bold, often unexpected color combinations
+- Lines: Bold or Thin (strong graphic quality)
+- Shading: Flat or Cel-shading (comic book style)
+- Halftone Dots: Optional Ben-Day dots for authentic pop art feel
+- Composition: Strong silhouette, graphic impact
+- Aesthetic: Warhol/Lichtenstein inspired, retro-modern
+- Background: Solid bold color or graphic pattern
+
+**Style Notes**: Pop art often uses non-naturalistic colors (green skin, blue hair OK!)
+```
+
+**Temperature**: 0.85 (creative for bold color choices)
+
+**Validation Threshold**: 75+ (non-naturalistic colors are part of the style)
+
+---
+
+#### **Style 13: Tritone (3-Color Limited Palette)**
+
+**Expert Persona CHANGES**:
+```
+You are a master of limited palette design, specializing in tritone (three-color)
+illustration. Your expertise is choosing three harmonious colors that work together
+to create depth, contrast, and visual interest within strict constraints.
+```
+
+**Prompt Addition**:
+```
+**Tritone Requirements:**
+- Colors: EXACTLY 3 colors total (AI selects harmonious trio)
+- Lines: Smooth, Bold, or None
+- Shading: Flat (NO gradients - depth from 3-color layering only)
+- Color Selection: AI chooses 3 complementary/analogous colors
+- Aesthetic: Vintage poster, screen printing style
+- Composition: Strong value contrast with 3 tones
+
+**Color Strategy**: Often uses:
+- Tone 1: Highlights/lightest areas
+- Tone 2: Midtones/main color
+- Tone 3: Shadows/darkest areas
+
+**Palette Setting Ignored**: Tritone always uses its own 3-color logic!
+```
+
+**Temperature**: 0.7 (creative for color selection, controlled for limit)
+
+**Validation Threshold**: 75+ (limited colors make identity harder)
+
+---
+
+#### **Style 14: Dotwork / Stippling**
+
+**Expert Persona CHANGES**:
+```
+You are a master of stippling and dotwork illustration, specializing in creating
+images composed entirely of thousands of carefully placed dots. Your work has a
+meditative, intricate quality inspired by pointillism and tattoo art.
+```
+
+**Prompt Addition**:
+```
+**Dotwork/Stippling Requirements:**
+- Technique: Image composed ENTIRELY of dots (no solid areas)
+- Dot Density: Varies to create light/dark areas
+- Lines: Thin (ONLY option - dots can form line-like edges)
+- Shading: None (depth created by dot density variation)
+- Aesthetic: Intricate, tattoo-style, artistic
+- Texture: Visible individual dots at reasonable zoom
+- Complexity: High detail, meditative quality
+
+**Quality Warning**: Dotwork requires HIGH resolution (1024px recommended) to show
+individual dots clearly. At 512px, dots may merge visually.
+
+**Composition Note**: Works best with Portrait-Only or Bust (detail focused).
+```
+
+**Temperature**: 0.6 (precise for dot placement)
+
+**Validation Threshold**: 70+ (abstract technique makes identity harder)
+
+**Generation Time**: LONGER (complex technique may take 15-20 seconds per sticker)
+
+---
+
+#### **Style 15: Sticker Style (Purpose-Built)**
+
+**Expert Persona CHANGES**:
+```
+You are a master sticker designer who has created thousands of successful sticker
+packs for messaging apps like WhatsApp, Telegram, and LINE. You specialize in
+creating high-readability, bold, instantly recognizable stickers optimized for
+small screen sizes.
+```
+
+**Prompt Addition**:
+```
+**Sticker Style Requirements:**
+- Purpose: Optimized specifically for sticker format
+- Lines: Bold or Smooth (thick, prominent outlines for readability)
+- Shading: Gradient or Cel-shading (depth but maintaining clarity)
+- Colors: Vibrant, high-contrast (readable at small sizes)
+- Composition: Clear silhouette, no fine details that disappear when small
+- Background: Transparent with slight glow/outline for visibility
+- Readability: PRIORITY - sticker must be clear at 100px × 100px size
+
+**Optimization**: This style is engineered for maximum impact at small display sizes.
+Details that would disappear when shrunk to emoji size are avoided.
+
+**Contrast**: Higher contrast than Cartoon Vector for better visibility.
+```
+
+**Temperature**: 0.7
+
+**Validation Threshold**: 85+ (purpose-built for identity clarity)
+
+**Best For**: Actual messaging app stickers (WhatsApp, Telegram, Discord, Slack)
+
+---
+
 ### How Style Affects Identity Lock Validation
 
 **Identity Validation Scoring** (Identity Lock V2):
 
-| Style | Validation Threshold | Reasoning |
-|-------|---------------------|-----------|
-| **Photorealistic** | 90+ | Must be nearly perfect |
-| **3D Render** | 85+ | Standard threshold |
-| **Cartoon Vector** | 85+ | Standard threshold |
-| **Kawaii** | 80+ | Stylization acceptable |
-| **Chibi** | 80+ | Proportion changes expected |
-| **Oil Painting** | 80+ | Artistic interpretation |
-| **Watercolor** | 75+ | Soft edges acceptable |
-| **WPAP** | 70+ | Geometric deconstruction difficult |
-| **Lineart** | 75+ | Minimal detail is normal |
-| **Pencil Sketch** | 75+ | Sketch quality expected |
+| Style | Validation Threshold | Temperature | Reasoning |
+|-------|---------------------|-------------|-----------|
+| **Photorealistic** | 90+ | 0.5 | Must be nearly perfect photographic match |
+| **3D Render** | 85+ | 0.6 | Standard threshold, CGI quality |
+| **Cartoon Vector** | 85+ | 0.7 | Standard threshold, vector clarity |
+| **Sticker Style** | 85+ | 0.7 | Purpose-built for identity clarity |
+| **Kawaii** | 80+ | 0.8 | Stylization acceptable (big eyes, etc.) |
+| **Chibi** | 80+ | 0.8 | Proportion changes expected |
+| **Oil Painting** | 80+ | 0.7 | Artistic interpretation allowed |
+| **Flat** | 80+ | 0.6 | Simplification is expected |
+| **Watercolor** | 75+ | 0.8 | Soft edges acceptable |
+| **Pop** | 75+ | 0.85 | Non-naturalistic colors part of style |
+| **Tritone** | 75+ | 0.7 | Limited colors make identity harder |
+| **Lineart** | 75+ | 0.7 | Minimal detail is normal |
+| **Pencil Sketch** | 75+ | 0.8 | Sketch quality expected |
+| **Dotwork** | 70+ | 0.6 | Abstract technique makes identity harder |
+| **WPAP** | 70+ | 0.9 | Geometric deconstruction most difficult |
 
 **Validation Prompt Adapts**:
 
@@ -3769,11 +3934,623 @@ OUTPUT JSON:
 
 ---
 
+---
+
+## APPENDIX A: EXACT EXPRESSION DESCRIPTIONS (As Sent to AI)
+
+This appendix shows the **EXACT TEXT** from `constants/expressions.ts` that gets injected into generation prompts. These are the precise descriptions the AI receives for each expression.
+
+**Source**: `constants/expressions.ts` (lines 42-98)
+
+### Greetings (11 expressions)
+
+**HEY**
+```
+enthusiastically waving hello with a big, open-mouthed, friendly smile. One hand is raised 
+and open, gesturing towards the viewer. The expression is warm and inviting. IMPORTANT: If 
+using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Nod**
+```
+giving a slight, respectful nod of acknowledgement, head tilted down just a bit. The 
+expression is neutral to friendly, with a small, polite smile and eyes looking directly 
+at the viewer.
+```
+
+**High Five**
+```
+raising one hand high for an energetic high-five, with an excited and joyful expression, 
+mouth open in a cheer. The palm is open and facing the viewer, anticipating a connection. 
+IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**FISTBUMP**
+```
+extending a fist forward for a cool, friendly fistbump, elbow slightly bent. The fist is 
+aimed directly at the viewer, and the character has a confident grin and a slight nod. 
+IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Morning**
+```
+greeting the day with a bright, cheerful smile, holding a steaming cup of coffee or tea 
+with both hands. The character looks refreshed and content, looking directly at the viewer. 
+IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+*Default Speech Bubble*: "Morning!"
+
+**Good Afternoon**
+```
+giving a pleasant and friendly wave with an open palm towards the viewer. The character 
+has a relaxed, happy smile and a slight, welcoming head tilt. IMPORTANT: If using headshot 
+composition, ensure hands/arms are visible in frame.
+```
+*Default Speech Bubble*: "Good Afternoon"
+
+**Good Evening**
+```
+offering a calm, warm smile under a soft, gentle light, suggesting a twilight or evening 
+setting. The expression is peaceful and serene, looking directly at the viewer.
+```
+*Default Speech Bubble*: "Good Evening"
+
+**Love You**
+```
+making a heart shape with both hands held over their chest, looking at the viewer with 
+a warm, sincere, and deeply loving expression, eyes soft and smiling.
+```
+*Default Speech Bubble*: "Love You"
+
+**Love you more**
+```
+making a heart shape with both hands, with an even warmer and more effusive loving 
+expression, perhaps with slightly blushing cheeks and sparkling eyes, looking directly 
+at the viewer.
+```
+*Default Speech Bubble*: "Love you more"
+
+**Hi Beautiful**
+```
+giving a charming, playful wink with one eye while offering a confident, handsome smile 
+directly to the viewer. The head is tilted slightly.
+```
+*Default Speech Bubble*: "Hi Beautiful"
+
+**Hi Love**
+```
+waving hello with a soft, gentle smile and warm, loving eyes that convey deep affection, 
+one hand raised in a gentle wave. IMPORTANT: If using headshot composition, ensure hands/arms 
+are visible in frame.
+```
+*Default Speech Bubble*: "Hi Love"
+
+---
+
+### Gestures (4 expressions)
+
+**(Pose from image)**
+```
+Use the exact pose and expression from the provided photo.
+```
+*Note*: This gets replaced with actual pose description during generation!
+
+**Thumbs Up**
+```
+giving an enthusiastic thumbs up with a confident smile, right arm extended forward at 
+chest height with thumb pointing upward, looking directly at viewer with an excited 
+expression. IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**PEACE SIGN**
+```
+making a classic V-for-victory peace sign with their fingers, held up near their face. 
+Accompanied by a cheerful and friendly expression and a slight, playful head tilt. 
+IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Heart-hands**
+```
+forming a perfect heart shape with both hands, held out in front of their chest towards 
+the viewer, with a sincere and happy expression, eyes crinkling with joy. IMPORTANT: If 
+using headshot composition, ensure hands/arms are visible in frame.
+```
+
+---
+
+### Emotions (4 expressions)
+
+**Laughing**
+```
+laughing hysterically, with their head thrown back, eyes squeezed shut in mirth, and a 
+wide-open mouth. Cartoonish tears of joy are streaming down their face.
+```
+
+**In Love**
+```
+completely smitten, with large, glowing cartoon hearts for eyes and a blissful, dreamy 
+smile. Hands are clasped to their chest in pure adoration, looking slightly upwards.
+```
+
+**Sad**
+```
+looking utterly downcast with a sad, quivering frown. Large, glistening cartoon tears 
+well up in their big, sorrowful eyes, with one tear rolling down their cheek.
+```
+
+**Angry**
+```
+fuming with rage, with heavily furrowed brows, a determined scowl, and clenched teeth. 
+Cartoonish steam is comically puffing out of their ears, cheeks puffed out.
+```
+
+---
+
+### Reactions (5 expressions)
+
+**Facepalm**
+```
+doing an epic facepalm, with the palm of one hand pressed firmly against their forehead 
+in disbelief. Their eyes are closed in clear exasperation, and their head is tilted 
+slightly down. IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Shrug**
+```
+shrugging with both shoulders raised high and palms facing up in a classic 'I don't know' 
+gesture. The expression is puzzled or indifferent, with raised eyebrows and a slightly 
+open mouth. IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Mind Blown**
+```
+an exaggerated, explosive mind-blown expression. The top of their head comically explodes 
+with vibrant comic-book style energy, stars, and patterns, while their face remains intact 
+with a look of utter shock and awe, jaw dropped open.
+```
+
+**Eating Popcorn**
+```
+intently watching drama unfold while dramatically and eagerly eating popcorn from a large 
+bucket held in their lap. Their eyes are wide with fascination, leaning forward slightly. 
+IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Sipping Tea**
+```
+slyly sipping tea from a delicate teacup with one pinky finger extended, giving a knowing, 
+gossipy side-eye glance to the viewer, a small smirk on their lips. IMPORTANT: If using 
+headshot composition, ensure hands/arms are visible in frame.
+```
+
+---
+
+### Poses (5 expressions)
+
+**Wink**
+```
+giving a playful, charming wink with their left eye directly at the viewer, accompanied 
+by a confident, slightly lopsided smile and a raised eyebrow.
+```
+
+**Smirk**
+```
+a mischievous and confident smirk with one corner of the mouth raised, and one eyebrow 
+slightly arched. The character is looking cunningly at the viewer, perhaps with a slight 
+head tilt.
+```
+
+**Thinking**
+```
+in a classic thoughtful pose with an index finger and thumb resting on their chin, looking 
+upwards and to the side as if deep in concentration. A single, glowing lightbulb appears 
+above their head.
+```
+
+**Heroic Pose**
+```
+standing proudly in a classic superhero pose with hands firmly on hips, chest puffed out, 
+and a confident, determined look on their face, looking off into the distance as if watching 
+over a city.
+```
+
+**Crossed Arms**
+```
+standing with arms confidently crossed over their chest, looking serious, skeptical, or 
+unimpressed. Their expression is neutral or slightly frowning, with a firm stance. 
+IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+---
+
+### Activities (4 expressions)
+
+**Working on Laptop**
+```
+sitting and focused on a laptop, typing intently with a look of deep concentration. Their 
+fingers are blurred slightly from rapid typing, and the screen of the laptop casts a slight 
+glow on their face. IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Gaming**
+```
+intensely playing a video game with a controller held tightly in their hands, wearing 
+large headphones. They are leaning forward with a look of focused excitement or frustration, 
+tongue slightly sticking out. IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Celebrating**
+```
+cheering with pure joy and excitement, arms raised triumphantly in the air, throwing 
+colorful confetti with a huge, happy, open-mouthed smile. IMPORTANT: If using headshot 
+composition, ensure hands/arms are visible in frame.
+```
+
+**Reading Book**
+```
+happily engrossed in reading a thick, open book, with a thoughtful or captivated expression 
+on their face. They are completely lost in the story, oblivious to their surroundings. 
+IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+---
+
+### Expressions of Surprise (2 expressions)
+
+**Gasp**
+```
+gasping dramatically in surprise with a hand covering their mouth, eyes wide open with 
+shock and disbelief. Their whole body is recoiling slightly. IMPORTANT: If using headshot 
+composition, ensure hands/arms are visible in frame.
+```
+
+**Shocked**
+```
+a comical, jaw-dropped expression of utter shock. Their eyes are popping out cartoonishly, 
+and their body is frozen stiff in a look of complete disbelief.
+```
+
+---
+
+### Props & Items (5 expressions)
+
+**Deal With It**
+```
+a cool, smug expression as a pair of pixelated 'deal with it' sunglasses dramatically 
+slides down from above onto their face. The character is looking directly at the viewer 
+with a confident smirk. IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Coffee**
+```
+holding a large, steaming mug of coffee with both hands close to their face, inhaling 
+the aroma with a look of cozy contentment and closed eyes. IMPORTANT: If using headshot 
+composition, ensure hands/arms are visible in frame.
+```
+
+**Holds Sign**
+```
+holding up a large blank sign or placard with both hands, with a neutral and inviting 
+expression, looking directly at the viewer, ready for custom text. IMPORTANT: If using 
+headshot composition, ensure hands/arms are visible in frame.
+```
+
+**Punch-Forward**
+```
+punching straight forward towards the camera with a look of intense determination. The 
+fist is large and foreshortened, creating a dynamic, action-packed effect, with motion 
+lines indicating speed. IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**WAZZZAAA**
+```
+the iconic, goofy 'Wassup' face, with their tongue sticking out, eyes wide in a playful, 
+exaggerated expression, and a hand cupped to their mouth as if shouting at the viewer.
+```
+
+---
+
+### Understanding COMPOSITION_HANDLE
+
+**Notice**: 21 out of 36 expressions include:
+```
+IMPORTANT: If using headshot composition, ensure hands/arms are visible in frame.
+```
+
+**What This Does**:
+- Tells the AI to frame the shot to include hands/arms
+- Even in "Headshot/Bust" composition, arms should be visible if needed for the expression
+- Prevents awkward cropping (e.g., "Thumbs Up" with no thumb visible!)
+
+**Expressions WITH COMPOSITION_HANDLE** (need hands/arms):
+- HEY, High Five, FISTBUMP, Morning, Good Afternoon, Hi Love
+- Thumbs Up, PEACE SIGN, Heart-hands
+- Facepalm, Shrug, Eating Popcorn, Sipping Tea
+- Crossed Arms
+- Working on Laptop, Gaming, Celebrating, Reading Book
+- Gasp
+- Deal With It, Coffee, Holds Sign, Punch-Forward
+
+**Expressions WITHOUT** (face-focused only):
+- Nod, Good Evening, Love You, Love you more, Hi Beautiful
+- (Pose from image)
+- Laughing, In Love, Sad, Angry
+- Wink, Smirk, Thinking, Heroic Pose
+- Mind Blown, Shocked
+- WAZZZAAA
+
+**Practical Tip**: If you select an expression with COMPOSITION_HANDLE and use "Headshot/Bust", the AI will still try to show the hands. For best results, use "Half-Body" for these expressions!
+
+---
+
+## APPENDIX B: COMPLETE STYLE COMPATIBILITY MATRIX
+
+This table shows **EVERY valid combination** of Style + Line + Shading. Grayed cells = Invalid.
+
+**Source**: `constants.ts` lines 65-81
+
+| Style | Bold Lines | Thin Lines | Hand-drawn | Smooth | None | Flat Shade | Cel Shade | Gradient | No Shade |
+|-------|------------|------------|------------|--------|------|------------|-----------|----------|----------|
+| **Cartoon Vector** | ✅ | ✅ | — | ✅ | — | ✅ | ✅ | ✅ | — |
+| **Sticker Style** | ✅ | — | — | ✅ | — | — | ✅ | ✅ | — |
+| **Kawaii** | ✅ | ✅ | — | ✅ | — | ✅ | ✅ | ✅ | — |
+| **Chibi** | ✅ | — | — | ✅ | — | — | ✅ | ✅ | — |
+| **3D Render** | — | — | — | — | ✅ | — | — | ✅ | — |
+| **Lineart** | ✅ | ✅ | ✅ | ✅ | — | — | — | — | ✅ |
+| **Flat** | ✅ | ✅ | — | ✅ | ✅ | ✅ | — | — | — |
+| **WPAP** | ✅ | — | — | — | — | ✅ | — | — | — |
+| **Pop** | ✅ | ✅ | — | — | — | ✅ | ✅ | — | — |
+| **Tritone** | ✅ | — | — | ✅ | ✅ | ✅ | — | — | — |
+| **Dotwork** | — | ✅ | — | — | — | — | — | — | ✅ |
+| **Watercolor** | — | ✅ | ✅ | — | ✅ | — | — | ✅ | ✅ |
+| **Oil Painting** | ✅ | — | ✅ | ✅ | ✅ | — | — | ✅ | — |
+| **Pencil Sketch** | — | ✅ | ✅ | — | — | — | — | — | ✅ |
+| **Photorealistic** | — | — | — | — | ✅ | — | — | ✅ | — |
+
+**How to Read This Table**:
+- ✅ = Valid combination
+- — = Invalid (dropdown will filter this out)
+
+**Examples**:
+- **Photorealistic** + **Bold Lines** = ❌ INVALID (photos don't have outlines!)
+- **3D Render** + **Cel-shading** = ❌ INVALID (3D needs gradient for depth!)
+- **WPAP** + **Thin Lines** = ❌ INVALID (WPAP requires bold geometric borders!)
+- **Cartoon Vector** + **Gradient** = ✅ VALID (smooth color transitions work!)
+
+**Why This Exists**: Prevents artistically incoherent prompts that would confuse the AI or produce poor results.
+
+---
+
+## APPENDIX C: COMPLETE ANIMATION STYLES REFERENCE
+
+**Source**: `constants.ts` lines 45-55
+
+### All 9 Pre-Built Animation Styles + Custom
+
+**1. Subtle Movement**
+- **Motion**: Gentle breathing, slight head bob, natural idle animation
+- **Speed**: Slow, natural rhythm
+- **Best For**: Realistic styles (Photorealistic, 3D Render), professional use
+- **Expressions**: Works with ALL expressions
+- **Loop Quality**: Seamless, natural breathing cycle
+- **Energy Level**: Low
+
+**2. Bouncing**
+- **Motion**: Character bounces up and down rhythmically
+- **Speed**: Medium, energetic
+- **Best For**: Happy expressions (Celebrating, HEY, Laughing)
+- **Expressions**: Works best with upbeat/positive moods
+- **Loop Quality**: Perfect loop with spring physics
+- **Energy Level**: High
+
+**3. Wiggle**
+- **Motion**: Side-to-side wiggling, playful shaking
+- **Speed**: Fast, jittery
+- **Best For**: Cute styles (Kawaii, Chibi), playful expressions
+- **Expressions**: HEY, WAZZZAAA, Peace Sign
+- **Loop Quality**: Quick oscillation, attention-grabbing
+- **Energy Level**: High
+
+**4. Spinning**
+- **Motion**: Full 360° rotation of character
+- **Speed**: Medium
+- **Best For**: Celebrating, Deal With It, show-off expressions
+- **Expressions**: Works with most, but best for confident/celebration
+- **Loop Quality**: Smooth continuous rotation
+- **Energy Level**: Very High
+
+**5. Shimmering**
+- **Motion**: Sparkle/glitter overlay effects, slight glow pulsing
+- **Speed**: Slow shimmer
+- **Best For**: In Love, magical expressions, Kawaii styles
+- **Expressions**: Romantic or magical moods
+- **Loop Quality**: Continuous sparkle generation
+- **Energy Level**: Medium
+
+**6. Floating**
+- **Motion**: Gentle up-and-down floating, as if weightless
+- **Speed**: Slow, ethereal
+- **Best For**: Calm expressions, dreamy/artistic styles (Watercolor, Oil Painting)
+- **Expressions**: Thinking, Smirk, peaceful moods
+- **Loop Quality**: Smooth sine wave motion
+- **Energy Level**: Low
+
+**7. Pulsing**
+- **Motion**: Character grows and shrinks rhythmically (scale animation)
+- **Speed**: Medium
+- **Best For**: Mind Blown, emphasis expressions, Shocked
+- **Expressions**: Reactions, surprising moments
+- **Loop Quality**: Rhythmic expansion/contraction
+- **Energy Level**: High
+
+**8. Glitching**
+- **Motion**: Digital glitch effects, color separation, scan lines
+- **Speed**: Fast, erratic
+- **Best For**: Cyberpunk aesthetics, modern styles
+- **Expressions**: Deal With It, any tech-themed
+- **Loop Quality**: Random glitch intervals
+- **Energy Level**: Very High
+- **Style Tip**: Best with Flat, Pop, or modern styles
+
+**9. Zoom In-Out**
+- **Motion**: Camera zooms in then out (no character movement)
+- **Speed**: Medium
+- **Best For**: Dramatic moments (Shocked, Gasp), emphasis
+- **Expressions**: Surprise, revelation expressions
+- **Loop Quality**: Smooth zoom cycle
+- **Energy Level**: Medium-High
+
+**10. Custom**
+- **Motion**: You write your own animation prompt!
+- **Examples**:
+  - "Waving a tiny flag back and forth"
+  - "Confetti continuously falling from above"
+  - "Gentle head tilt left, then right, then center"
+  - "Eyes blinking slowly and naturally"
+  - "Thumbs up hand bouncing with enthusiasm"
+- **Best For**: Specific visions not covered by presets
+- **Complexity**: Simple motions work best (complex choreography may fail)
+
+---
+
+### Animation + Expression Pairing Guide
+
+| Expression Category | Best Animation Styles | Avoid |
+|--------------------|-----------------------|-------|
+| **Greetings** | Subtle Movement, Bouncing, Wiggle | Glitching, Pulsing |
+| **Gestures** | Bouncing, Custom (gesture-specific) | Spinning, Floating |
+| **Emotions** | Shimmering (love), Bouncing (happy), Floating (calm) | Depends on emotion |
+| **Reactions** | Pulsing, Zoom In-Out, Wiggle | Subtle Movement |
+| **Poses** | Subtle Movement, Floating | Spinning, Wiggle |
+| **Activities** | Subtle Movement, Custom | Spinning, Pulsing |
+| **Surprise** | Zoom In-Out, Pulsing, Glitching | Floating, Subtle |
+| **Props** | Depends on prop (Custom often best) | Varies |
+
+---
+
+## APPENDIX D: PROMPT CRAFTING WORKSHEET
+
+### For Text-to-Image Mode
+
+Use this template to describe your character systematically:
+
+```
+**Subject** (Main description):
+[What/who is this character? E.g., "A steampunk robot butler"]
+
+**Key Characteristics** (Structured details):
+
+Physical Features:
+- Face shape: [oval/round/square/heart/diamond]
+- Eyes: [color] [shape: almond/round/large/small]
+- Hair: [length] [style] [color]
+- Skin tone: [description with undertones]
+
+Distinctive Features:
+- [Any moles, freckles, tattoos, piercings, scars?]
+- [Glasses, earrings, facial hair?]
+
+Style/Clothing:
+- [What are they wearing?]
+- [Any accessories or props?]
+- [Overall aesthetic?]
+
+Personality Vibe:
+- [Friendly/serious/mysterious/playful?]
+```
+
+**Example Filled Out**:
+```
+Subject: A cyberpunk hacker
+
+Key Characteristics:
+Physical: Heart-shaped face, bright green eyes with tech implants, short neon blue 
+undercut hairstyle, fair skin with cool undertones
+
+Distinctive: Circuit board tattoo on left temple, multiple ear piercings with LED earrings, 
+small scar through left eyebrow
+
+Style/Clothing: Black tactical hoodie with neon green accents, AR visor pushed up on 
+forehead, fingerless gloves with tech interfaces
+
+Personality: Confident, tech-savvy, slightly rebellious
+```
+
+This structured approach helps the AI create consistent characters!
+
+---
+
+## APPENDIX E: DECISION FLOWCHARTS
+
+### Flowchart 1: Which Style Should I Choose?
+
+```
+What's your primary goal?
+├─ Messaging app stickers?
+│  ├─ Maximum readability → Sticker Style or Cartoon Vector
+│  └─ Cute aesthetic → Kawaii or Chibi
+│
+├─ Social media / portfolio?
+│  ├─ Artistic expression → Oil Painting, Watercolor, Pencil Sketch
+│  ├─ Modern/trendy → Pop, WPAP, Flat
+│  └─ Realistic showcase → Photorealistic or 3D Render
+│
+├─ Professional / work use?
+│  └─ Clean and minimal → Flat, Lineart, 3D Render
+│
+└─ Experimental / artistic?
+    └─ Try complex styles → Dotwork, Tritone, WPAP
+```
+
+---
+
+### Flowchart 2: Identity Lock Strength Decision
+
+```
+How critical is identity consistency?
+├─ CRITICAL (final pack, important project)
+│  └─ Use "Maximum" (3 retry attempts)
+│
+├─ IMPORTANT (standard use)
+│  └─ Use "Standard" (1 retry attempt) ← RECOMMENDED
+│
+├─ TESTING (style experimentation, rough drafts)
+│  └─ Use "Off" (V1, fastest, no validation)
+│
+└─ UNSURE?
+    └─ Start with "Standard" - best balance!
+```
+
+---
+
+### Flowchart 3: Credit Optimization Strategy
+
+```
+Want to minimize credit cost?
+├─ Use "(Pose from image)" expression
+│  └─ ONLY 1 credit total (ignores pack size!)
+│
+├─ Generate large packs (16-20 stickers)
+│  └─ Better value: 1 calibration + 20 stickers = 21 credits
+│  └─ vs 1 calibration + 4 stickers × 5 sessions = 25 credits
+│
+├─ Test with pack size 1-2 before committing
+│  └─ Try new style in small batch first
+│
+├─ Reuse Identity Lock from Collection
+│  └─ Drag previous sticker → FREE identity restoration
+│
+└─ Avoid animations for testing
+    └─ 1 credit per animation vs 1 credit per static sticker
+```
+
+---
+
 **END OF GUIDE**
 
 For questions, issues, or feedback, please refer to the project documentation or submit an issue on the repository.
 
-**Version**: 1.0  
-**Document Length**: Complete comprehensive guide  
+**Version**: 1.1  
+**Document Length**: Complete comprehensive guide with ALL enhancements  
 **Last Updated**: October 17, 2025
 
