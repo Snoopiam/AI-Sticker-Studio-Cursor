@@ -81,6 +81,21 @@ export const OnboardingTooltips: React.FC<OnboardingTooltipsProps> = ({ appMode 
         setTargetRect(null); // Clear previous target
     }, [appMode]);
 
+    // Handle window resize to recalculate positions
+    useEffect(() => {
+        const handleResize = () => {
+            if (step && targetRect) {
+                const targetElement = document.querySelector(step.target);
+                if (targetElement) {
+                    setTargetRect(targetElement.getBoundingClientRect());
+                }
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [step, targetRect]);
+
     useEffect(() => {
         if (!step) return;
 
@@ -124,34 +139,94 @@ export const OnboardingTooltips: React.FC<OnboardingTooltipsProps> = ({ appMode 
             zIndex: 10001,
             transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',
         };
-        const offset = 12;
+        const offset = 16;
+        const tooltipWidth = window.innerWidth < 768 ? 280 : 320; // Responsive tooltip width
+        const tooltipHeight = window.innerWidth < 768 ? 100 : 120; // Responsive tooltip height
+        const viewportPadding = window.innerWidth < 768 ? 16 : 20;
 
+        // Calculate optimal position with viewport boundary detection
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        let finalPosition = position;
+        let finalStyle: React.CSSProperties = { ...style };
+
+        // Smart positioning logic
         switch (position) {
             case 'top':
-                style.top = targetRect.top - offset;
-                style.left = targetRect.left + targetRect.width / 2;
-                style.transform = 'translate(-50%, -100%)';
+                const topSpace = targetRect.top;
+                const bottomSpace = viewportHeight - targetRect.bottom;
+                
+                if (topSpace < tooltipHeight + offset && bottomSpace > topSpace) {
+                    finalPosition = 'bottom';
+                }
                 break;
             case 'bottom':
-                style.top = targetRect.bottom + offset;
-                style.left = targetRect.left + targetRect.width / 2;
-                style.transform = 'translateX(-50%)';
+                const bottomSpaceAvailable = viewportHeight - targetRect.bottom;
+                const topSpaceAvailable = targetRect.top;
+                
+                if (bottomSpaceAvailable < tooltipHeight + offset && topSpaceAvailable > bottomSpaceAvailable) {
+                    finalPosition = 'top';
+                }
                 break;
             case 'left':
-                style.top = targetRect.top + targetRect.height / 2;
-                style.left = targetRect.left - offset;
-                style.transform = 'translate(-100%, -50%)';
+                const leftSpace = targetRect.left;
+                const rightSpace = viewportWidth - targetRect.right;
+                
+                if (leftSpace < tooltipWidth + offset && rightSpace > leftSpace) {
+                    finalPosition = 'right';
+                }
                 break;
             case 'right':
-                style.top = targetRect.top + targetRect.height / 2;
-                style.left = targetRect.right + offset;
-                style.transform = 'translateY(-50%)';
+                const rightSpaceAvailable = viewportWidth - targetRect.right;
+                const leftSpaceAvailable = targetRect.left;
+                
+                if (rightSpaceAvailable < tooltipWidth + offset && leftSpaceAvailable > rightSpaceAvailable) {
+                    finalPosition = 'left';
+                }
                 break;
         }
-        return style;
+
+        // Apply positioning based on final calculated position
+        switch (finalPosition) {
+            case 'top':
+                finalStyle.top = Math.max(viewportPadding, targetRect.top - tooltipHeight - offset);
+                finalStyle.left = Math.max(viewportPadding, Math.min(
+                    viewportWidth - tooltipWidth - viewportPadding,
+                    targetRect.left + targetRect.width / 2 - tooltipWidth / 2
+                ));
+                finalStyle.transform = 'translateX(0)';
+                break;
+            case 'bottom':
+                finalStyle.top = Math.min(viewportHeight - tooltipHeight - viewportPadding, targetRect.bottom + offset);
+                finalStyle.left = Math.max(viewportPadding, Math.min(
+                    viewportWidth - tooltipWidth - viewportPadding,
+                    targetRect.left + targetRect.width / 2 - tooltipWidth / 2
+                ));
+                finalStyle.transform = 'translateX(0)';
+                break;
+            case 'left':
+                finalStyle.top = Math.max(viewportPadding, Math.min(
+                    viewportHeight - tooltipHeight - viewportPadding,
+                    targetRect.top + targetRect.height / 2 - tooltipHeight / 2
+                ));
+                finalStyle.left = Math.max(viewportPadding, targetRect.left - tooltipWidth - offset);
+                finalStyle.transform = 'translateY(0)';
+                break;
+            case 'right':
+                finalStyle.top = Math.max(viewportPadding, Math.min(
+                    viewportHeight - tooltipHeight - viewportPadding,
+                    targetRect.top + targetRect.height / 2 - tooltipHeight / 2
+                ));
+                finalStyle.left = Math.min(viewportWidth - tooltipWidth - viewportPadding, targetRect.right + offset);
+                finalStyle.transform = 'translateY(0)';
+                break;
+        }
+
+        return finalStyle;
     };
     
-    // A separate element to highlight the target with a border and create a "spotlight" effect.
+    // Enhanced highlight system with arrow indicators
     const highlightStyle: React.CSSProperties = {
         position: 'fixed',
         top: targetRect.top,
@@ -159,23 +234,73 @@ export const OnboardingTooltips: React.FC<OnboardingTooltipsProps> = ({ appMode 
         width: targetRect.width,
         height: targetRect.height,
         borderRadius: '8px',
-        boxShadow: '0 0 0 4px #A78BFA, 0 0 0 9999px rgba(0,0,0,0.7)',
+        boxShadow: '0 0 0 3px #A78BFA, 0 0 0 9999px rgba(0,0,0,0.6)',
         zIndex: 10000,
         pointerEvents: 'none',
         transition: 'all 0.3s ease-in-out'
+    };
+
+    // Calculate arrow position based on tooltip position
+    const getArrowStyle = (): React.CSSProperties => {
+        const tooltipStyle = getTooltipPosition();
+        const arrowSize = 12;
+        
+        const arrowStyle: React.CSSProperties = {
+            position: 'fixed',
+            width: 0,
+            height: 0,
+            zIndex: 10002,
+            pointerEvents: 'none',
+        };
+
+        // Determine arrow direction based on tooltip position relative to target
+        const tooltipCenterX = tooltipStyle.left! + 160; // Half of tooltip width
+        const tooltipCenterY = tooltipStyle.top! + 60; // Half of tooltip height
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
+
+        if (tooltipCenterY < targetCenterY) {
+            // Tooltip is above target - arrow points down
+            arrowStyle.top = tooltipStyle.top! + 120 - arrowSize;
+            arrowStyle.left = Math.max(targetRect.left, Math.min(targetRect.right - arrowSize, tooltipCenterX - arrowSize));
+            arrowStyle.borderLeft = `${arrowSize}px solid transparent`;
+            arrowStyle.borderRight = `${arrowSize}px solid transparent`;
+            arrowStyle.borderTop = `${arrowSize}px solid #A78BFA`;
+        } else {
+            // Tooltip is below target - arrow points up
+            arrowStyle.top = tooltipStyle.top! - arrowSize;
+            arrowStyle.left = Math.max(targetRect.left, Math.min(targetRect.right - arrowSize, tooltipCenterX - arrowSize));
+            arrowStyle.borderLeft = `${arrowSize}px solid transparent`;
+            arrowStyle.borderRight = `${arrowSize}px solid transparent`;
+            arrowStyle.borderBottom = `${arrowSize}px solid #A78BFA`;
+        }
+
+        return arrowStyle;
     };
 
     return (
         <>
             <div className="fixed inset-0 z-[9999]" onClick={handleFinish} />
             <div style={highlightStyle} />
-            <div style={getTooltipPosition()} className="bg-purple-600 text-white p-4 rounded-lg shadow-lg max-w-xs w-full animate-fade-in">
-                <p className="text-sm">{step.content}</p>
+            <div style={getArrowStyle()} />
+            <div 
+                style={getTooltipPosition()} 
+                className="bg-purple-600 text-white p-4 rounded-lg shadow-xl max-w-sm w-full animate-fade-in border border-purple-500"
+            >
+                <p className="text-sm font-medium leading-relaxed">{step.content}</p>
                 <div className="flex justify-between items-center mt-4">
-                    <button onClick={handleFinish} className="text-xs font-semibold text-purple-200 hover:text-white">Skip Tour</button>
-                    <div className="flex items-center gap-2">
-                        <span className="text-xs text-purple-200">{currentStep + 1} / {steps.length}</span>
-                        <button onClick={handleNext} className="bg-white text-purple-600 font-bold py-1 px-3 rounded-md text-sm">
+                    <button 
+                        onClick={handleFinish} 
+                        className="text-xs font-semibold text-purple-200 hover:text-white transition-colors duration-200"
+                    >
+                        Skip Tour
+                    </button>
+                    <div className="flex items-center gap-3">
+                        <span className="text-xs text-purple-200 font-medium">{currentStep + 1} / {steps.length}</span>
+                        <button 
+                            onClick={handleNext} 
+                            className="bg-white text-purple-600 font-bold py-2 px-4 rounded-md text-sm hover:bg-purple-50 transition-colors duration-200 shadow-sm"
+                        >
                             {currentStep === steps.length - 1 ? 'Finish' : 'Next'}
                         </button>
                     </div>
