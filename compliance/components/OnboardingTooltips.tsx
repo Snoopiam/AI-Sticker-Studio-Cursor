@@ -34,19 +34,19 @@ interface OnboardingTooltipsProps {
 const stickerSteps: Step[] = [
     { target: '[data-tour-id="upload-area"]', content: 'Start by uploading a clear photo of yourself here.', position: 'right' },
     { target: '[data-tour-id="upload-area"]', content: 'Your photo will be automatically calibrated to lock your identity. This is the magic that makes stickers look like you!', position: 'right' },
-    { target: '[data-tour-id="expression-grid"]', content: 'Next, choose one or more expressions for your sticker pack.', position: 'top' },
-    { target: '[data-tour-id="generate-button"]', content: 'Finally, click "Generate" to create your stickers!', position: 'top' },
+    { target: '[data-tour-id="expression-grid"]', content: 'Next, choose one or more expressions for your sticker pack.', position: 'left' },
+    { target: '[data-tour-id="generate-button"]', content: 'Finally, click "Generate" to create your stickers!', position: 'left' },
 ];
 
 const wallpaperSteps: Step[] = [
     { target: '[data-tour-id="character-library"]', content: 'Import characters to include in your wallpapers. You can create them from photos or import generated stickers.', position: 'right' },
-    { target: '[data-tour-id="wallpaper-prompt"]', content: 'Describe the scene you want to create for your wallpaper.', position: 'top' },
-    { target: '[data-tour-id="wallpaper-generate"]', content: 'Click here to generate your stunning new wallpaper!', position: 'top' },
+    { target: '[data-tour-id="wallpaper-prompt"]', content: 'Describe the scene you want to create for your wallpaper.', position: 'left' },
+    { target: '[data-tour-id="wallpaper-generate"]', content: 'Click here to generate your stunning new wallpaper!', position: 'left' },
 ];
 
 const remixSteps: Step[] = [
     { target: '[data-tour-id="remix-upload-area"]', content: 'Upload any photo to get started. The AI will automatically cut out the subjects for you.', position: 'right' },
-    { target: '[data-tour-id="remix-generate"]', content: 'Describe the new scene and how you want to change the subjects, then click Generate!', position: 'top' },
+    { target: '[data-tour-id="remix-generate"]', content: 'Describe the new scene and how you want to change the subjects, then click Generate!', position: 'left' },
 ];
 
 const stepsMap: Record<string, Step[]> = {
@@ -139,88 +139,97 @@ export const OnboardingTooltips: React.FC<OnboardingTooltipsProps> = ({ appMode 
             zIndex: 10001,
             transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',
         };
-        const offset = 16;
-        const tooltipWidth = window.innerWidth < 768 ? 280 : 320; // Responsive tooltip width
-        const tooltipHeight = window.innerWidth < 768 ? 100 : 120; // Responsive tooltip height
+        const offset = 24; // Increased offset to prevent overlap
+        const tooltipWidth = window.innerWidth < 768 ? 280 : 320;
+        const tooltipHeight = window.innerWidth < 768 ? 100 : 120;
         const viewportPadding = window.innerWidth < 768 ? 16 : 20;
 
-        // Calculate optimal position with viewport boundary detection
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
         
+        // Calculate safe zones to avoid overlapping with target
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
+        
+        // Determine best position to avoid overlap
         let finalPosition = position;
         let finalStyle: React.CSSProperties = { ...style };
 
-        // Smart positioning logic
-        switch (position) {
-            case 'top':
-                const topSpace = targetRect.top;
-                const bottomSpace = viewportHeight - targetRect.bottom;
-                
-                if (topSpace < tooltipHeight + offset && bottomSpace > topSpace) {
-                    finalPosition = 'bottom';
+        // Check if tooltip would overlap with target in current position
+        const wouldOverlap = (pos: string) => {
+            switch (pos) {
+                case 'top':
+                    return targetRect.top - tooltipHeight - offset < 0 || 
+                           Math.abs((targetRect.top - tooltipHeight - offset) - targetRect.bottom) < 50;
+                case 'bottom':
+                    return targetRect.bottom + tooltipHeight + offset > viewportHeight ||
+                           Math.abs((targetRect.bottom + offset) - targetRect.top) < 50;
+                case 'left':
+                    return targetRect.left - tooltipWidth - offset < 0 ||
+                           Math.abs((targetRect.left - tooltipWidth - offset) - targetRect.right) < 50;
+                case 'right':
+                    return targetRect.right + tooltipWidth + offset > viewportWidth ||
+                           Math.abs((targetRect.right + offset) - targetRect.left) < 50;
+                default:
+                    return false;
+            }
+        };
+
+        // Find the best non-overlapping position
+        if (wouldOverlap(position)) {
+            const positions = ['top', 'bottom', 'left', 'right'];
+            for (const pos of positions) {
+                if (!wouldOverlap(pos)) {
+                    finalPosition = pos;
+                    break;
                 }
-                break;
-            case 'bottom':
-                const bottomSpaceAvailable = viewportHeight - targetRect.bottom;
-                const topSpaceAvailable = targetRect.top;
-                
-                if (bottomSpaceAvailable < tooltipHeight + offset && topSpaceAvailable > bottomSpaceAvailable) {
-                    finalPosition = 'top';
-                }
-                break;
-            case 'left':
-                const leftSpace = targetRect.left;
-                const rightSpace = viewportWidth - targetRect.right;
-                
-                if (leftSpace < tooltipWidth + offset && rightSpace > leftSpace) {
-                    finalPosition = 'right';
-                }
-                break;
-            case 'right':
-                const rightSpaceAvailable = viewportWidth - targetRect.right;
-                const leftSpaceAvailable = targetRect.left;
-                
-                if (rightSpaceAvailable < tooltipWidth + offset && leftSpaceAvailable > rightSpaceAvailable) {
-                    finalPosition = 'left';
-                }
-                break;
+            }
         }
 
-        // Apply positioning based on final calculated position
+        // Apply positioning with aggressive spacing
         switch (finalPosition) {
             case 'top':
                 finalStyle.top = Math.max(viewportPadding, targetRect.top - tooltipHeight - offset);
                 finalStyle.left = Math.max(viewportPadding, Math.min(
                     viewportWidth - tooltipWidth - viewportPadding,
-                    targetRect.left + targetRect.width / 2 - tooltipWidth / 2
+                    targetCenterX - tooltipWidth / 2
                 ));
-                finalStyle.transform = 'translateX(0)';
                 break;
             case 'bottom':
                 finalStyle.top = Math.min(viewportHeight - tooltipHeight - viewportPadding, targetRect.bottom + offset);
                 finalStyle.left = Math.max(viewportPadding, Math.min(
                     viewportWidth - tooltipWidth - viewportPadding,
-                    targetRect.left + targetRect.width / 2 - tooltipWidth / 2
+                    targetCenterX - tooltipWidth / 2
                 ));
-                finalStyle.transform = 'translateX(0)';
                 break;
             case 'left':
                 finalStyle.top = Math.max(viewportPadding, Math.min(
                     viewportHeight - tooltipHeight - viewportPadding,
-                    targetRect.top + targetRect.height / 2 - tooltipHeight / 2
+                    targetCenterY - tooltipHeight / 2
                 ));
                 finalStyle.left = Math.max(viewportPadding, targetRect.left - tooltipWidth - offset);
-                finalStyle.transform = 'translateY(0)';
                 break;
             case 'right':
                 finalStyle.top = Math.max(viewportPadding, Math.min(
                     viewportHeight - tooltipHeight - viewportPadding,
-                    targetRect.top + targetRect.height / 2 - tooltipHeight / 2
+                    targetCenterY - tooltipHeight / 2
                 ));
                 finalStyle.left = Math.min(viewportWidth - tooltipWidth - viewportPadding, targetRect.right + offset);
-                finalStyle.transform = 'translateY(0)';
                 break;
+        }
+
+        // If still overlapping, force position to screen edges
+        if (finalStyle.top! < viewportPadding) {
+            finalStyle.top = viewportPadding;
+        }
+        if (finalStyle.left! < viewportPadding) {
+            finalStyle.left = viewportPadding;
+        }
+        if (finalStyle.top! + tooltipHeight > viewportHeight - viewportPadding) {
+            finalStyle.top = viewportHeight - tooltipHeight - viewportPadding;
+        }
+        if (finalStyle.left! + tooltipWidth > viewportWidth - viewportPadding) {
+            finalStyle.left = viewportWidth - tooltipWidth - viewportPadding;
         }
 
         return finalStyle;
