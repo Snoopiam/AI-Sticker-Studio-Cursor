@@ -87,7 +87,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
                         </div>
                     ) : (
                         <div className="text-center pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
                             <p className="mt-2 text-sm text-gray-200 font-semibold">Click, Paste, or Drag & Drop</p>
                             <p className="text-xs text-gray-400">The AI will automatically cut out the main subjects.</p>
                         </div>
